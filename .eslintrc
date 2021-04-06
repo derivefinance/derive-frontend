@@ -1,0 +1,35 @@
+{
+  "extends":  [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    }
+  },
+  "parser":  "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion":  2018,
+    "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
+    "sourceType": "module"
+  },
+  "plugins": ["jest"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "mocha": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": 0,
+    "no-invalid-this": 0,
+    "no-unused-vars": "off",
+    "sort-imports": 0
+  }
+}
