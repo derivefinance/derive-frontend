@@ -6,7 +6,7 @@ import { Web3Provider } from "@ethersproject/providers"
 
 const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
 export const NETWORK_CHAIN_ID: number = parseInt(
-  process.env.REACT_APP_CHAIN_ID ?? "1",
+  process.env.REACT_APP_CHAIN_ID ?? "56",
 )
 
 if (typeof NETWORK_URL === "undefined") {
@@ -30,7 +30,7 @@ export function getNetworkLibrary(): Web3Provider {
 export const injected = new InjectedConnector({
   // mainnet, ropsten, rinkeby, goerli, kovan, local buidler
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
-  supportedChainIds: [1, 3, 4, 5, 42, 31337],
+  supportedChainIds: [56],
 })
 
 export const walletconnect = new WalletConnectConnector({
@@ -42,5 +42,5 @@ export const walletconnect = new WalletConnectConnector({
 
 export const walletlink = new WalletLinkConnector({
   url: NETWORK_URL,
-  appName: "Saddle",
+  appName: "derive",
 })

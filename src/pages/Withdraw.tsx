@@ -6,9 +6,7 @@ import { commify, formatUnits, parseUnits } from "@ethersproject/units"
 import { AppState } from "../state"
 import { BigNumber } from "@ethersproject/bignumber"
 import { Zero } from "@ethersproject/constants"
-import { calculateGasEstimate } from "../utils/gasEstimate"
 import { calculatePriceImpact } from "../utils/priceImpact"
-import { formatGasToString } from "../utils/gas"
 import { formatSlippageToString } from "../utils/slippage"
 import { useActiveWeb3React } from "../hooks"
 import { useApproveAndWithdraw } from "../hooks/useApproveAndWithdraw"
@@ -25,15 +23,10 @@ function Withdraw({ poolName }: Props): ReactElement {
   const [withdrawFormState, updateWithdrawFormState] = useWithdrawFormState(
     poolName,
   )
-  const {
-    slippageCustom,
-    slippageSelected,
-    gasPriceSelected,
-    gasCustom,
-  } = useSelector((state: AppState) => state.user)
-  const { tokenPricesUSD, gasStandard, gasFast, gasInstant } = useSelector(
-    (state: AppState) => state.application,
+  const { slippageCustom, slippageSelected } = useSelector(
+    (state: AppState) => state.user,
   )
+  const { tokenPricesUSD } = useSelector((state: AppState) => state.application)
   const approveAndWithdraw = useApproveAndWithdraw(poolName)
   const swapContract = useSwapContract(poolName)
   const { account } = useActiveWeb3React()
@@ -115,34 +108,15 @@ function Withdraw({ poolName }: Props): ReactElement {
       })),
     [withdrawFormState, POOL.poolTokens],
   )
-  const gasPrice = BigNumber.from(
-    formatGasToString(
-      { gasStandard, gasFast, gasInstant },
-      gasPriceSelected,
-      gasCustom,
-    ),
-  )
-  const gasAmount = calculateGasEstimate("removeLiquidityImbalance").mul(
-    gasPrice,
-  ) // units of gas * GWEI/Unit of gas
-
-  const txnGasCost = {
-    amount: gasAmount,
-    valueUSD: tokenPricesUSD?.ETH
-      ? parseUnits(tokenPricesUSD.ETH.toFixed(2), 18) // USD / ETH  * 10^18
-          .mul(gasAmount) // GWEI
-          .div(BigNumber.from(10).pow(25)) // USD / ETH * GWEI * ETH / GWEI = USD
-      : null,
-  }
 
   const reviewWithdrawData: ReviewWithdrawData = {
     withdraw: [],
     rates: [],
     slippage: formatSlippageToString(slippageSelected, slippageCustom),
     priceImpact: estWithdrawBonus,
-    txnGasCost: txnGasCost,
   }
   POOL.poolTokens.forEach(({ name, decimals, icon, symbol }) => {
+    
     if (BigNumber.from(withdrawFormState.tokenInputs[symbol].valueSafe).gt(0)) {
       reviewWithdrawData.withdraw.push({
         name,
@@ -154,14 +128,21 @@ function Withdraw({ poolName }: Props): ReactElement {
         ),
         icon,
       })
+
       if (tokenPricesUSD != null) {
+        let price;
+        if (symbol == "OUSD") {
+          price = 1
+        } else {
+          price = tokenPricesUSD[symbol]?.toFixed(2)
+        }
         reviewWithdrawData.rates.push({
           name,
           value: formatUnits(
             withdrawFormState.tokenInputs[symbol].valueSafe,
             decimals,
           ),
-          rate: commify(tokenPricesUSD[symbol]?.toFixed(2)),
+          rate: commify(price) ,
         })
       }
     }

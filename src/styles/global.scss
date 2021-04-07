@@ -13,7 +13,7 @@
 p,
 b,
 span {
-  font-family: $font-family;
+  //font-family: "Noe display";
   line-height: 20px;
   size: 16px;
 }
@@ -23,7 +23,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: $font-family-title;
+  font-family: "Noto Sans";
 }
 
 svg,
@@ -39,10 +39,10 @@ ul {
 :root {
   --primary-foreground: #000;
   --primary-background: #fff;
-  --background: #ffffe9;
+  --background: #e7e6e6;
   --background-element: rgba(255, 255, 244, 0.6);
   --background-element-hover: rgba(255, 255, 255, 0.88);
-  --background-main: #ffffe9 url("../assets/bg_light.svg") center/auto 60%
+  --background-main: #e7e6e6 /*url("../assets/bg_light.svg")*/ center/auto 60%
     no-repeat fixed;
   --background-logo: #{$primary};
   --outline: #000;
@@ -65,11 +65,11 @@ ul {
 // Dark mode themes
 body.dark {
   --primary-foreground: #fff;
-  --primary-background: #000;
-  --background: #000;
+  --primary-background: #424242;
+  --background: #424242;
   --background-element: rgba(0, 0, 0, 0.56);
   --background-element-hover: rgba(0, 0, 0, 0.8);
-  --background-main: #000 url("../assets/bg.svg") center/auto 60% no-repeat
+  --background-main: #424242 /*url("../assets/bg.svg")*/ center/auto 60% no-repeat
     fixed;
   --background-logo: #ffffe9;
   --outline: #fff;

@@ -42,7 +42,7 @@ div.no-share {
     &:hover,
     &:focus {
       outline: none;
-      background-color: $primary-blue;
+      background-color: "#d4af37"; /*$primary-blue;*/
       color: $text-white;
       box-shadow: var(--shadow-hover);
     }

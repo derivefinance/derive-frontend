@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next"
 
 interface Props {
   to: string
-  poolData: PoolDataType
+  poolData: PoolDataType | null
   userShareData: UserShareType | null
 }
 
@@ -23,10 +23,11 @@ function PoolOverview({
   userShareData,
 }: Props): ReactElement | null {
   const { t } = useTranslation()
+  if (poolData == null) return null
   const formattedData = {
     name: poolData.name,
     reserve: `$${commify(formatBNToString(poolData.reserve, 18, 2))}`,
-    apr: formatBNToPercentString(poolData.keepApr, 18),
+    apr: formatBNToPercentString(poolData.oikosApr || Zero, 18),
     userBalanceUSD: `$${commify(
       formatBNToString(userShareData?.usdBalance || Zero, 18, 2),
     )}`,
@@ -50,7 +51,7 @@ function PoolOverview({
             <span style={{ marginRight: "8px" }}>[</span>
             {formattedData.tokens.map((token) => (
               <div className="token" key={token.symbol}>
-                <img alt="icon" src={token.icon} />
+                <img style={{width:"18px", height:"18px"}} alt="icon" src={token.icon} />
                 <span>{token.name}</span>
               </div>
             ))}
@@ -58,9 +59,9 @@ function PoolOverview({
           </div>
 
           <div className="right">
-            {poolData?.keepApr.gt(Zero) && (
+            {poolData.oikosApr.gt(Zero) && (
               <div className="Apr">
-                <span className="label">KEEP APR</span>
+                <span className="label">OIKOS APR</span>
                 <span
                   className={
                     classNames({ plus: formattedData.apr }) +

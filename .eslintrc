@@ -27,9 +27,9 @@
     "jest/globals": true
   },
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": 0,
     "no-invalid-this": 0,
     "no-unused-vars": "off",
-    "sort-imports": "error"
+    "sort-imports": 0
   }
 }

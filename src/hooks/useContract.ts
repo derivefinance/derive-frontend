@@ -68,16 +68,18 @@ export function useSwapBTCContract(): SwapGuarded | null {
   const { chainId } = useActiveWeb3React()
   return useContract(
     chainId ? BTC_SWAP_ADDRESSES[chainId] : undefined,
+    //SWAP_FLASH_LOAN_ABI,
     SWAP_GUARDED_ABI,
   ) as SwapGuarded
 }
 
-export function useSwapUSDContract(): SwapFlashLoan | null {
+export function useSwapUSDContract(): SwapGuarded | null {
   const { chainId } = useActiveWeb3React()
   return useContract(
     chainId ? STABLECOIN_SWAP_ADDRESSES[chainId] : undefined,
-    SWAP_FLASH_LOAN_ABI,
-  ) as SwapFlashLoan
+    //SWAP_FLASH_LOAN_ABI,
+    SWAP_GUARDED_ABI
+    ) as SwapGuarded
 }
 
 export function useSwapContract<T extends PoolName>(
@@ -117,7 +119,7 @@ export function useLPTokenContract(
     lpTokenAddress,
     LPTOKEN_UNGUARDED_ABI,
   ) as LpTokenUnguarded
-  return poolName === BTC_POOL_NAME ? lpTokenGuarded : lpTokenUnguarded
+  return poolName === BTC_POOL_NAME ? lpTokenUnguarded : lpTokenUnguarded
 }
 
 interface AllContractsObject {

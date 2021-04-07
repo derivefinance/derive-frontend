@@ -1,7 +1,7 @@
 import "./ReviewSwap.scss"
 
 import React, { ReactElement, useState } from "react"
-import { commify, formatBNToString, formatDeadlineToNumber } from "../utils"
+import { formatBNToString, formatDeadlineToNumber } from "../utils"
 
 import { AppState } from "../state/index"
 import { BigNumber } from "@ethersproject/bignumber"
@@ -25,10 +25,6 @@ interface Props {
       pair: string
       priceImpact: BigNumber
       exchangeRate: BigNumber
-    }
-    txnGasCost: {
-      amount: BigNumber
-      valueUSD: BigNumber | null // amount * ethPriceUSD
     }
   }
 }
@@ -117,16 +113,6 @@ function ReviewSwap({ onClose, onConfirm, data }: Props): ReactElement {
               GWEI
             </span>
           </div>
-          {data.txnGasCost?.valueUSD && (
-            <div className="row">
-              <span className="title">{t("estimatedTxCost")}</span>
-              <span className="value floatRight">
-                {`≈$${commify(
-                  formatBNToString(data.txnGasCost.valueUSD, 2, 2),
-                )}`}
-              </span>
-            </div>
-          )}
           <div className="row">
             <span className="title">{t("maxSlippage")}</span>
             <span className="value floatRight">

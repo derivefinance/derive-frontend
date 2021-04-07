@@ -23,7 +23,7 @@ function Pools({
         <h3 className={styles.title}>{t("selectAPool")}</h3>
         <PoolOverview
           poolData={btcPoolData}
-          to={`/${action}/btc`}
+          to={`/${action}/ousd`}
           userShareData={btcUserShareData}
         />
         <PoolOverview

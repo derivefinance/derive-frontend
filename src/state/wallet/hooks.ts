@@ -8,6 +8,7 @@ import {
   USDC,
   USDT,
   WBTC,
+  OUSD,
 } from "../../constants"
 
 import { BigNumber } from "@ethersproject/bignumber"
@@ -52,14 +53,15 @@ export function usePoolTokenBalances(
   const daiTokenBalance = useTokenBalance(DAI)
   const usdcTokenBalance = useTokenBalance(USDC)
   const usdtTokenBalance = useTokenBalance(USDT)
+  const ousdTokenBalance = useTokenBalance(OUSD)
   const btcPoolTokenBalances = useMemo(
     () => ({
-      [TBTC.symbol]: tbtcTokenBalance,
-      [WBTC.symbol]: wbtcTokenBalance,
-      [RENBTC.symbol]: renbtcTokenBalance,
-      [SBTC.symbol]: sbtcTokenBalance,
+      [DAI.symbol]: daiTokenBalance,
+      [USDC.symbol]: usdcTokenBalance,
+      [USDT.symbol]: usdtTokenBalance,
+      [OUSD.symbol]: ousdTokenBalance,
     }),
-    [tbtcTokenBalance, wbtcTokenBalance, renbtcTokenBalance, sbtcTokenBalance],
+    [daiTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
   )
   const stablecoinPoolTokenBalances = useMemo(
     () => ({

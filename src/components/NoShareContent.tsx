@@ -10,7 +10,7 @@ function NoShareContent(): ReactElement {
 
   return (
     <div className="no-share">
-      <img src={depositGraph} alt="put tokens in pool" />
+      <img src={depositGraph} alt="put tokens in pool" style={{width:"320px", height:"300px"}} />
       <h2>
         {t("noDepositTitle")}
         <br />

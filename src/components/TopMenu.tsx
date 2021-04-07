@@ -1,12 +1,17 @@
+/* prettier-ignore */
+/* tslint:disable */
+
 import "./TopMenu.scss"
+import {  AppState } from "../state"
 
-import React, { ReactElement } from "react"
-
+import React, { ReactElement, useEffect, useRef  } from "react"
+import {  useSelector } from "react-redux"
+import logoDark from "../assets/icons/logo-dark.svg"
+import logoLight from "../assets/icons/logo-light.svg"
 import { Link } from "react-router-dom"
 import ThemeChanger from "./ThemeChanger"
 import Web3Status from "./Web3Status"
 import classNames from "classnames"
-import logo from "../assets/icons/logo.svg"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -16,14 +21,26 @@ interface Props {
 function TopMenu({ activeTab }: Props): ReactElement {
   const { t } = useTranslation()
 
+  const { userDarkMode } = useSelector((state: AppState) => state.user)
+  const [themedLogo, setThemedLogo] = React.useState('');
+
+  useEffect(() => {
+    
+    if (userDarkMode) {
+      setThemedLogo(logoDark)
+    } else {
+      setThemedLogo(logoLight)
+    }
+  }, [userDarkMode])
+
+  
   return (
     <header className="top">
       <h1>
         <Link to="/">
-          <img className="logo" alt="logo" src={logo} />
+          <img className="logo" alt="logo" src={themedLogo} style={{width:"190px", height:"80px", marginTop: "40px"}} />
         </Link>
       </h1>
-
       <ul className="nav">
         <li>
           <Link to="/" className={classNames({ active: activeTab === "swap" })}>

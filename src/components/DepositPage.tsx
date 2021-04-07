@@ -75,7 +75,7 @@ const DepositPage = (props: Props): ReactElement => {
   return (
     <div className="deposit">
       <TopMenu activeTab={"deposit"} />
-      {poolData?.keepApr.gt(Zero) && myShareData?.lpTokenBalance.gt(0) && (
+      {poolData?.oikosApr.gt(Zero) && myShareData?.lpTokenBalance.gt(0) && (
         <LPStakingBanner />
       )}
 
@@ -103,17 +103,17 @@ const DepositPage = (props: Props): ReactElement => {
             ))}
             <div className={classNames("transactionInfoContainer", "show")}>
               <div className="transactionInfo">
-                {poolData?.keepApr.gt(Zero) && (
+                {poolData?.oikosApr.gt(Zero) && (
                   <div className="transactionInfoItem">
                     <a
-                      href="https://docs.saddle.finance/faq#what-are-saddles-liquidity-provider-rewards"
+                      href="https://docs.derive.finance/faq#what-are-derives-liquidity-provider-rewards"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span>{`KEEP APR:`}</span>
+                      <span>{`OIKOS APR:`}</span>
                     </a>{" "}
                     <span className="value">
-                      {formatBNToPercentString(poolData.keepApr, 18)}
+                      {formatBNToPercentString(poolData.oikosApr, 18)}
                     </span>
                   </div>
                 )}
@@ -162,7 +162,7 @@ const DepositPage = (props: Props): ReactElement => {
                   fillRule="evenodd"
                   clipRule="evenodd"
                   d="M14.8252 0C16.077 0 16.3783 0.827943 15.487 1.86207L8.80565 9.61494C8.35999 10.1321 7.63098 10.1246 7.19174 9.61494L0.510262 1.86207C-0.376016 0.833678 -0.0777447 0 1.17205 0L14.8252 0Z"
-                  fill="#00f4d7"
+                  fill="#f8d12f"
                 />
               </svg>
             </span>
