@@ -46,12 +46,12 @@ export class Token {
 export const BLOCK_TIME = 15000
 
 export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.MAINNET]: "0xc4BA33879BcFbAbccF11627d2f60565Fc3c90Fe8",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
 export const BTC_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.MAINNET]: "0xbe2E5b1Dc1d2c9aB38B505Aaee093a63db20550e",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -63,14 +63,14 @@ export const MERKLETREE_DATA: { [chainId in ChainId]: string } = {
 export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.MAINNET]: "0x2A61Fb982D829831743c712eE9A4Ab2ABe5FD6d5",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
 export const BTC_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.MAINNET]: "0x84f82d2bF719fc3b721b4270bc349f0356345c2e",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
