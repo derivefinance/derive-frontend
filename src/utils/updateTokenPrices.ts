@@ -16,7 +16,7 @@ export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
   const tokens = BTC_POOL_TOKENS.concat(STABLECOIN_POOL_TOKENS)
   const tokenIds = tokens
     .map(({ geckoId }) => geckoId)
-    .concat(["ethereum", "bitcoin", "oikos"])
+    .concat(["binancecoin", "bitcoin", "oikos"])
   void retry(
     () =>
       fetch(`${coinGeckoAPI}?ids=${encodeURIComponent(
@@ -25,12 +25,14 @@ export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
     `)
         .then((res) => res.json())
         .then((body: CoinGeckoReponse) => {
+          console.log(body)
+
           const result = tokens.reduce(
             (acc, token) => {
               return { ...acc, [token.symbol]: body?.[token.geckoId]?.usd }
             },
             {
-              ETH: body?.ethereum?.usd,
+              BNB: body?.binancecoin?.usd,
               BTC: body?.bitcoin?.usd,
               OIKOS: body?.oikos?.usd,
             },
