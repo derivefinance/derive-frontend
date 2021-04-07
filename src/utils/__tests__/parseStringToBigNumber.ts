@@ -2,8 +2,8 @@ import parseStringToBigNumber, {
   parseStringAndTokenToBigNumber,
 } from "../parseStringToBigNumber"
 
+import { BTCB } from "../../constants"
 import { BigNumber } from "@ethersproject/bignumber"
-import { WBTC } from "../../constants"
 import { Zero } from "@ethersproject/constants"
 
 describe("parseStringToBigNumber", () => {
@@ -37,8 +37,8 @@ describe("parseStringToBigNumber", () => {
 describe("parseStringAndTokenToBigNumber", () => {
   it("returns the correct precision for a token", () => {
     const input = 1.23
-    expect(parseStringAndTokenToBigNumber(input.toString(), "WBTC")).toEqual({
-      value: BigNumber.from((input * 10 ** WBTC.decimals).toString()),
+    expect(parseStringAndTokenToBigNumber(input.toString(), "BTCB")).toEqual({
+      value: BigNumber.from((input * 10 ** BTCB.decimals).toString()),
       isFallback: false,
     })
   })

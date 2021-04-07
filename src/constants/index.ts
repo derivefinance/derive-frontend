@@ -6,7 +6,6 @@ import sbtcLogo from "../assets/icons/sbtc.svg"
 import tbtcLogo from "../assets/icons/tbtc.svg"
 import usdcLogo from "../assets/icons/usdc.svg"
 import usdtLogo from "../assets/icons/usdt.svg"
-import wbtcLogo from "../assets/icons/wbtc.svg"
 
 export const NetworkContextName = "NETWORK"
 export const BTC_POOL_NAME = "BTC Pool"
@@ -149,34 +148,35 @@ export const OUSD = new Token(
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
 
 // Tokenized BTC
-const TBTC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x8daebade922df735c38c80c7ebd708af50815faa",
+const BTCB_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
-export const TBTC = new Token(
-  TBTC_CONTRACT_ADDRESSES,
+export const BTCB = new Token(
+  BTCB_CONTRACT_ADDRESSES,
   18,
-  "TBTC",
-  "tbtc",
-  "tBTC",
+  "BTCB",
+  "btcb",
+  "BTCb",
   tbtcLogo,
 )
 
-const WBTC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+const OBTC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x19e0E8413DEe3AfFd94bdd42519d01935a0CF0c2",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
-export const WBTC = new Token(
-  WBTC_CONTRACT_ADDRESSES,
-  8,
-  "WBTC",
-  "wrapped-bitcoin",
-  "WBTC",
-  wbtcLogo,
+export const OBTC = new Token(
+  OBTC_CONTRACT_ADDRESSES,
+  18,
+  "OBTC",
+  "Oikos Bitcoin",
+  "OBTC",
+  // TODO: oikos bitcoin logo
+  sbtcLogo,
 )
 
 const RENBTC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+  [ChainId.MAINNET]: "0xfce146bf3146100cfe5db4129cf6c82b0ef4ad8c",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const RENBTC = new Token(
@@ -188,20 +188,7 @@ export const RENBTC = new Token(
   renbtcLogo,
 )
 
-const SBTC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6",
-  [ChainId.TESTNET]: "0xdeadbeef",
-}
-export const SBTC = new Token(
-  SBTC_CONTRACT_ADDRESSES,
-  18,
-  "SBTC",
-  "sbtc",
-  "sBTC",
-  sbtcLogo,
-)
-
-export const BTC_POOL_TOKENS = [TBTC, WBTC, RENBTC, SBTC]
+export const BTC_POOL_TOKENS = [BTCB, OBTC, RENBTC]
 
 // maps a symbol string to a token object
 export const TOKENS_MAP: {

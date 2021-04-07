@@ -1,14 +1,13 @@
 import { BLOCK_TIME, DAI, STABLECOIN_POOL_NAME, Token } from "../../constants"
 import {
+  BTCB,
   BTC_POOL_NAME,
+  OBTC,
   OUSD,
   PoolName,
   RENBTC,
-  SBTC,
-  TBTC,
   USDC,
   USDT,
-  WBTC,
 } from "../../constants"
 
 import { BigNumber } from "@ethersproject/bignumber"
@@ -28,9 +27,13 @@ export function useTokenBalance(t: Token): BigNumber {
 
   usePoller((): void => {
     async function pollBalance(): Promise<void> {
-      const newBalance = account
-        ? await tokenContract?.balanceOf(account)
-        : Zero
+      let newBalance
+      try {
+        newBalance = account ? await tokenContract?.balanceOf(account) : Zero
+      } catch (err) {
+        console.error("Error fetching balance for token", tokenContract)
+        throw err
+      }
       if (newBalance !== balance) {
         setBalance(newBalance)
       }
@@ -46,22 +49,20 @@ export function useTokenBalance(t: Token): BigNumber {
 export function usePoolTokenBalances(
   poolName: PoolName,
 ): { [token: string]: BigNumber } | null {
-  const tbtcTokenBalance = useTokenBalance(TBTC)
-  const wbtcTokenBalance = useTokenBalance(WBTC)
+  const btcbTokenBalance = useTokenBalance(BTCB)
   const renbtcTokenBalance = useTokenBalance(RENBTC)
-  const sbtcTokenBalance = useTokenBalance(SBTC)
+  const obtcTokenBalance = useTokenBalance(OBTC)
   const daiTokenBalance = useTokenBalance(DAI)
   const usdcTokenBalance = useTokenBalance(USDC)
   const usdtTokenBalance = useTokenBalance(USDT)
   const ousdTokenBalance = useTokenBalance(OUSD)
   const btcPoolTokenBalances = useMemo(
     () => ({
-      [TBTC.symbol]: tbtcTokenBalance,
-      [WBTC.symbol]: wbtcTokenBalance,
+      [BTCB.symbol]: btcbTokenBalance,
       [RENBTC.symbol]: renbtcTokenBalance,
-      [SBTC.symbol]: sbtcTokenBalance,
+      [OBTC.symbol]: obtcTokenBalance,
     }),
-    [tbtcTokenBalance, wbtcTokenBalance, renbtcTokenBalance, sbtcTokenBalance],
+    [btcbTokenBalance, renbtcTokenBalance, obtcTokenBalance],
   )
   const stablecoinPoolTokenBalances = useMemo(
     () => ({

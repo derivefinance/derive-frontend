@@ -1,19 +1,18 @@
 import {
+  BTCB,
   BTC_POOL_NAME,
   BTC_SWAP_ADDRESSES,
   BTC_SWAP_TOKEN,
   DAI,
+  OBTC,
   PoolName,
   RENBTC,
-  SBTC,
   STABLECOIN_POOL_NAME,
   STABLECOIN_SWAP_ADDRESSES,
   STABLECOIN_SWAP_TOKEN,
-  TBTC,
   Token,
   USDC,
   USDT,
-  WBTC,
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -124,10 +123,9 @@ interface AllContractsObject {
   [x: string]: LpTokenGuarded | LpTokenUnguarded | Erc20 | null
 }
 export function useAllContracts(): AllContractsObject | null {
-  const tbtcContract = useTokenContract(TBTC) as Erc20
-  const wbtcContract = useTokenContract(WBTC) as Erc20
+  const btcbContract = useTokenContract(BTCB) as Erc20
   const renbtcContract = useTokenContract(RENBTC) as Erc20
-  const sbtcContract = useTokenContract(SBTC) as Erc20
+  const obtcContract = useTokenContract(OBTC) as Erc20
   const daiContract = useTokenContract(DAI) as Erc20
   const usdcContract = useTokenContract(USDC) as Erc20
   const usdtContract = useTokenContract(USDT) as Erc20
@@ -141,10 +139,9 @@ export function useAllContracts(): AllContractsObject | null {
   return useMemo(() => {
     if (
       ![
-        tbtcContract,
-        wbtcContract,
+        btcbContract,
         renbtcContract,
-        sbtcContract,
+        obtcContract,
         daiContract,
         usdcContract,
         usdtContract,
@@ -154,10 +151,9 @@ export function useAllContracts(): AllContractsObject | null {
     )
       return null
     return {
-      [TBTC.symbol]: tbtcContract,
-      [WBTC.symbol]: wbtcContract,
+      [BTCB.symbol]: btcbContract,
       [RENBTC.symbol]: renbtcContract,
-      [SBTC.symbol]: sbtcContract,
+      [OBTC.symbol]: obtcContract,
       [DAI.symbol]: daiContract,
       [USDC.symbol]: usdcContract,
       [USDT.symbol]: usdtContract,
@@ -165,10 +161,9 @@ export function useAllContracts(): AllContractsObject | null {
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
     }
   }, [
-    tbtcContract,
-    wbtcContract,
+    btcbContract,
     renbtcContract,
-    sbtcContract,
+    obtcContract,
     daiContract,
     usdcContract,
     usdtContract,
