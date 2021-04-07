@@ -45,7 +45,7 @@
     "web-vitals": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.13.14",
     "@chakra-ui/cli": "^1.2.1",
     "@ethersproject/experimental": "^5.0.9",
     "@storybook/addon-actions": "^6.0.28",
