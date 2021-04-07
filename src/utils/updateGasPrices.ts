@@ -56,12 +56,20 @@ const fetchGasPriceGasNow = (): Promise<GenericGasReponse> =>
       throw new Error("Unable to fetch gas price from GasNow Network")
     })
 
+// TODO: find API for Binance Smart Chain gas price
+/* eslint-disable */
+const fetchGasPriceHardcoded = async (): Promise<GenericGasReponse> => ({
+  gasStandard: 10,
+  gasFast: 15,
+  gasInstant: 20
+})
+
 export default async function fetchGasPrices(
   dispatch: AppDispatch,
 ): Promise<void> {
   await retry(
     () =>
-      fetchGasPriceGasNow().then((gasPrices) => {
+      fetchGasPriceHardcoded().then((gasPrices) => {
         dispatch(updateGasPrices(gasPrices))
       }),
     {
