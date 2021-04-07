@@ -59,8 +59,8 @@ const fetchGasPriceGasNow = (): Promise<GenericGasReponse> =>
 // TODO: find API for Binance Smart Chain gas price
 /* eslint-disable */
 const fetchGasPriceHardcoded = async (): Promise<GenericGasReponse> => ({
-  gasStandard: 10,
-  gasFast: 15,
+  gasStandard: 5,
+  gasFast: 10,
   gasInstant: 20
 })
 
