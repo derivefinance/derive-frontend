@@ -56,20 +56,21 @@ export function usePoolTokenBalances(
   const ousdTokenBalance = useTokenBalance(OUSD)
   const btcPoolTokenBalances = useMemo(
     () => ({
-      [DAI.symbol]: daiTokenBalance,
-      [USDC.symbol]: usdcTokenBalance,
-      [USDT.symbol]: usdtTokenBalance,
-      [OUSD.symbol]: ousdTokenBalance,
+      [TBTC.symbol]: tbtcTokenBalance,
+      [WBTC.symbol]: wbtcTokenBalance,
+      [RENBTC.symbol]: renbtcTokenBalance,
+      [SBTC.symbol]: sbtcTokenBalance,
     }),
-    [daiTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
+    [tbtcTokenBalance, wbtcTokenBalance, renbtcTokenBalance, sbtcTokenBalance],
   )
   const stablecoinPoolTokenBalances = useMemo(
     () => ({
       [DAI.symbol]: daiTokenBalance,
       [USDC.symbol]: usdcTokenBalance,
       [USDT.symbol]: usdtTokenBalance,
+      [OUSD.symbol]: ousdTokenBalance,
     }),
-    [daiTokenBalance, usdcTokenBalance, usdtTokenBalance],
+    [daiTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
   )
 
   if (poolName === BTC_POOL_NAME) {
