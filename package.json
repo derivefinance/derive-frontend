@@ -79,7 +79,7 @@
   },
   "scripts": {
     "lint": "eslint --max-warnings=0 --ext ts,tsx src/ && prettier --list-different 'src/**/*.{ts,tsx,scss}'",
-    "lint:fix": "eslint --max-warnings=0 --ext ts,tsx --fix src/ && prettier --write 'src/**/*.{ts,tsx,scss}'",
+    "lint:fix": "eslint --max-warnings=20 --ext ts,tsx --fix src/ && prettier --write 'src/**/*.{ts,tsx,scss}'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
