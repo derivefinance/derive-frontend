@@ -1,6 +1,7 @@
 import { BLOCK_TIME, DAI, STABLECOIN_POOL_NAME, Token } from "../../constants"
 import {
   BTC_POOL_NAME,
+  OUSD,
   PoolName,
   RENBTC,
   SBTC,
@@ -8,7 +9,6 @@ import {
   USDC,
   USDT,
   WBTC,
-  OUSD,
 } from "../../constants"
 
 import { BigNumber } from "@ethersproject/bignumber"

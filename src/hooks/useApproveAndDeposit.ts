@@ -1,11 +1,9 @@
 import {
   BTC_POOL_NAME,
-  STABLECOIN_POOL_NAME,
   POOLS_MAP,
   PoolName,
   TRANSACTION_TYPES,
   Token,
-  MERKLETREE_DATA
 } from "../constants"
 import { useAllContracts, useSwapContract } from "./useContract"
 
@@ -26,21 +24,9 @@ import { useActiveWeb3React } from "."
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { useToast } from "./useToast"
-import { BytesLike, arrayify } from "@ethersproject/bytes";
 
 interface ApproveAndDepositStateArgument {
   [tokenSymbol: string]: NumberInputState
-}
-
-/* eslint-disable */
-const unpack = (str: String) => {
-  let bytes = [] as BytesLike[]
-  for(let i = 0; i < str.length; i++) {
-      let char = str.charCodeAt(i);
-      bytes.push(`${char >>> 8}`);
-      bytes.push(`${char & 0xFF}`);
-  }
-  return bytes;
 }
 
 export function useApproveAndDeposit(
@@ -163,7 +149,6 @@ export function useApproveAndDeposit(
       const txnDeadline = Math.round(
         new Date().getTime() / 1000 + 60 * deadline,
       )
-      /* eslint-disable */
       if (poolName === BTC_POOL_NAME) {
         const swapGuardedContract = swapContract as SwapGuarded
         spendTransaction = await swapGuardedContract?.addLiquidity(
@@ -176,12 +161,11 @@ export function useApproveAndDeposit(
           },
         )
       } else {
-        const swapFlashLoanContract = swapContract as SwapGuarded
+        const swapFlashLoanContract = swapContract as SwapFlashLoan
         spendTransaction = await swapFlashLoanContract?.addLiquidity(
           txnAmounts,
           minToMint,
           txnDeadline,
-          [],
           {
             gasPrice,
           },

@@ -2,16 +2,17 @@
 /* tslint:disable */
 
 import "./TopMenu.scss"
-import {  AppState } from "../state"
-
-import React, { ReactElement, useEffect, useRef  } from "react"
-import {  useSelector } from "react-redux"
-import logoDark from "../assets/icons/logo-dark.svg"
-import logoLight from "../assets/icons/logo-light.svg"
+import { ReactElement, useEffect } from "react"
+import { AppState } from "../state"
 import { Link } from "react-router-dom"
+
+import React from "react"
 import ThemeChanger from "./ThemeChanger"
 import Web3Status from "./Web3Status"
 import classNames from "classnames"
+import logoDark from "../assets/icons/logo-dark.svg"
+import logoLight from "../assets/icons/logo-light.svg"
+import { useSelector } from "react-redux"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -22,10 +23,9 @@ function TopMenu({ activeTab }: Props): ReactElement {
   const { t } = useTranslation()
 
   const { userDarkMode } = useSelector((state: AppState) => state.user)
-  const [themedLogo, setThemedLogo] = React.useState('');
+  const [themedLogo, setThemedLogo] = React.useState("")
 
   useEffect(() => {
-    
     if (userDarkMode) {
       setThemedLogo(logoDark)
     } else {
@@ -33,12 +33,16 @@ function TopMenu({ activeTab }: Props): ReactElement {
     }
   }, [userDarkMode])
 
-  
   return (
     <header className="top">
       <h1>
         <Link to="/">
-          <img className="logo" alt="logo" src={themedLogo} style={{width:"190px", height:"80px", marginTop: "40px"}} />
+          <img
+            className="logo"
+            alt="logo"
+            src={themedLogo}
+            style={{ width: "190px", height: "80px", marginTop: "40px" }}
+          />
         </Link>
       </h1>
       <ul className="nav">

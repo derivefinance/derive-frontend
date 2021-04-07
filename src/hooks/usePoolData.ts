@@ -51,20 +51,48 @@ export interface UserShareType {
   value: BigNumber
 }
 
-export type PoolDataHookReturnType = [PoolDataType | null, UserShareType | null]
+export type PoolDataHookReturnType = [PoolDataType, UserShareType | null]
+
+const emptyPoolData = {
+  adminFee: Zero,
+  apy: "",
+  name: "",
+  reserve: Zero,
+  swapFee: Zero,
+  tokens: [],
+  totalLocked: Zero,
+  utilization: "",
+  virtualPrice: Zero,
+  volume: "",
+  oikosApr: Zero,
+  lpTokenPriceUSD: Zero,
+} as PoolDataType
 
 export default function usePoolData(
   poolName: PoolName,
 ): PoolDataHookReturnType {
   const { account, library } = useActiveWeb3React()
   const swapContract = useSwapContract(poolName)
-  const [poolData, setPoolData] = useState<PoolDataHookReturnType>([null, null])
   const { tokenPricesUSD, lastTransactionTimes } = useSelector(
     (state: AppState) => state.application,
   )
   const lastDepositTime = lastTransactionTimes[TRANSACTION_TYPES.DEPOSIT]
   const lastWithdrawTime = lastTransactionTimes[TRANSACTION_TYPES.WITHDRAW]
   const lastSwapTime = lastTransactionTimes[TRANSACTION_TYPES.SWAP]
+  const POOL = POOLS_MAP[poolName]
+
+  const [poolData, setPoolData] = useState<PoolDataHookReturnType>([
+    {
+      ...emptyPoolData,
+      name: poolName,
+      tokens: POOL.poolTokens.map((token) => ({
+        symbol: token.symbol,
+        percent: "0",
+        value: Zero,
+      })),
+    },
+    null,
+  ])
 
   useEffect(() => {
     async function getSwapData(): Promise<void> {
@@ -77,12 +105,10 @@ export default function usePoolData(
       )
         return
 
-      const POOL = POOLS_MAP[poolName]
-
       // Swap fees, price, and LP Token data
       const [userCurrentWithdrawFee, swapStorage] = await Promise.all([
         swapContract.calculateCurrentWithdrawFee(account || AddressZero),
-        swapContract.swapStorage(),
+        swapContract.swapStorage(), // will fail without account
       ])
       const { adminFee, lpToken: lpTokenAddress, swapFee } = swapStorage
       let lpTokenContract
@@ -138,12 +164,12 @@ export default function usePoolData(
             .mul(BigNumber.from(10).pow(18))
             .div(tokenBalancesSum)
 
-      // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
+      // (weeksPerYear * KEEPPerWeek * KEEPPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
-      const oikosAPRNumerator = BigNumber.from(52 * 137000)
+      const keepAPRNumerator = BigNumber.from(52 * 250000)
         .mul(BigNumber.from(10).pow(18))
-        .mul(parseUnits(String(0.03 || 0), 18))
-      const oikosAPRDenominator = totalLpTokenBalance
+        .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+      const keepAPRDenominator = totalLpTokenBalance
         .mul(
           parseUnits(
             String(tokenPricesUSD[comparisonPoolToken.symbol] || 0),
@@ -153,8 +179,8 @@ export default function usePoolData(
         .div(1e6)
 
       const oikosApr = totalLpTokenBalance.isZero()
-        ? oikosAPRNumerator
-        : oikosAPRNumerator.div(oikosAPRDenominator)
+        ? keepAPRNumerator
+        : keepAPRNumerator.div(keepAPRDenominator)
 
       // User share data
       const userShare = userLpTokenBalance
@@ -243,6 +269,7 @@ export default function usePoolData(
     tokenPricesUSD,
     account,
     library,
+    POOL.poolTokens,
   ])
 
   return poolData

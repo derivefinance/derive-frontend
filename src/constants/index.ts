@@ -1,7 +1,7 @@
 import { BigNumber } from "@ethersproject/bignumber"
 import daiLogo from "../assets/icons/dai.svg"
-import renbtcLogo from "../assets/icons/renbtc.svg"
 import deriveLogo from "../assets/icons/logo-dark.svg"
+import renbtcLogo from "../assets/icons/renbtc.svg"
 import sbtcLogo from "../assets/icons/sbtc.svg"
 import tbtcLogo from "../assets/icons/tbtc.svg"
 import usdcLogo from "../assets/icons/usdc.svg"
@@ -15,7 +15,7 @@ export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME
 
 export enum ChainId {
   MAINNET = 56,
-  TESTNET = 97
+  TESTNET = 97,
 }
 
 export class Token {

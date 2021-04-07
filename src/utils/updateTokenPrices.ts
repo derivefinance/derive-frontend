@@ -32,7 +32,7 @@ export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
             {
               ETH: body?.ethereum?.usd,
               BTC: body?.bitcoin?.usd,
-              OIKOS: body?.["oikos"].usd,
+              OIKOS: body?.oikos?.usd,
             },
           )
           dispatch(updateTokensPricesUSD(result))

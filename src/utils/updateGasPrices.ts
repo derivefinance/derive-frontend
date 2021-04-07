@@ -38,6 +38,7 @@ const fetchGasPricePOA = (): Promise<GenericGasReponse> =>
       throw new Error("Unable to fetch gas price from POA Network")
     })
 
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const fetchGasPriceGasNow = (): Promise<GenericGasReponse> =>
   fetch("https://www.gasnow.org/api/v3/gas/price?utm_source=derive")
     .then((res) => res.json())
@@ -61,7 +62,7 @@ const fetchGasPriceGasNow = (): Promise<GenericGasReponse> =>
 const fetchGasPriceHardcoded = async (): Promise<GenericGasReponse> => ({
   gasStandard: 5,
   gasFast: 10,
-  gasInstant: 20
+  gasInstant: 20,
 })
 
 export default async function fetchGasPrices(
