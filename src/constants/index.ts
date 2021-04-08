@@ -51,7 +51,7 @@ export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
 }
 
 export const BTC_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xbe2E5b1Dc1d2c9aB38B505Aaee093a63db20550e",
+  [ChainId.MAINNET]: "0xF01EF8d5601f0275edE73e1cA67141e680bfDdbd",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -70,7 +70,7 @@ export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
 export const BTC_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
-  [ChainId.MAINNET]: "0x84f82d2bF719fc3b721b4270bc349f0356345c2e",
+  [ChainId.MAINNET]: "0x950CCeD347Ad08Ff845b8d807a49050D33fB2d40",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
