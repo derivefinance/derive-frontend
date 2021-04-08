@@ -5,6 +5,7 @@ import {
   BTC_SWAP_TOKEN,
   DAI,
   OBTC,
+  OUSD,
   PoolName,
   RENBTC,
   STABLECOIN_POOL_NAME,
@@ -129,6 +130,7 @@ export function useAllContracts(): AllContractsObject | null {
   const daiContract = useTokenContract(DAI) as Erc20
   const usdcContract = useTokenContract(USDC) as Erc20
   const usdtContract = useTokenContract(USDT) as Erc20
+  const ousdContract = useTokenContract(OUSD) as Erc20
   const btcSwapTokenContract = useTokenContract(
     BTC_SWAP_TOKEN,
   ) as LpTokenGuarded
@@ -145,6 +147,7 @@ export function useAllContracts(): AllContractsObject | null {
         daiContract,
         usdcContract,
         usdtContract,
+        ousdContract,
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
       ].some(Boolean)
@@ -157,6 +160,7 @@ export function useAllContracts(): AllContractsObject | null {
       [DAI.symbol]: daiContract,
       [USDC.symbol]: usdcContract,
       [USDT.symbol]: usdtContract,
+      [OUSD.symbol]: ousdContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
     }
@@ -164,6 +168,7 @@ export function useAllContracts(): AllContractsObject | null {
     btcbContract,
     renbtcContract,
     obtcContract,
+    ousdContract,
     daiContract,
     usdcContract,
     usdtContract,
