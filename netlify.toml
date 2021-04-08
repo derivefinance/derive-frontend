@@ -6,6 +6,7 @@
   NODE_VERSION = "12.18.3"
   REACT_APP_CONTEXT = "production"
   CI = ""
+  DISABLE_ESLINT_PLUGIN = "true"
 
 [[redirects]]
   from = "/*"
