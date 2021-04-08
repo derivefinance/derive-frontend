@@ -1,6 +1,6 @@
 [build]
   publish = "build"
-  command = "CI= npm run build"
+  command = "npm ci && run build"
 
 [build.environment]
   REACT_APP_CONTEXT = "production"
