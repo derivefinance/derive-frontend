@@ -25,8 +25,6 @@ export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
     `)
         .then((res) => res.json())
         .then((body: CoinGeckoReponse) => {
-          console.log(body)
-
           const result = tokens.reduce(
             (acc, token) => {
               return { ...acc, [token.symbol]: body?.[token.geckoId]?.usd }

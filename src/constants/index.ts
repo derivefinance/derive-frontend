@@ -139,7 +139,7 @@ export const OUSD = new Token(
   OUSD_CONTRACT_ADDRESSES,
   18,
   "OUSD",
-  "ousd",
+  "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
   "Oikos USD",
   // TODO: ousd logo
   usdtLogo,
@@ -156,7 +156,7 @@ export const BTCB = new Token(
   BTCB_CONTRACT_ADDRESSES,
   18,
   "BTCB",
-  "btcb",
+  "binance-bitcoin", // coingecko id
   "BTCb",
   tbtcLogo,
 )
@@ -169,7 +169,7 @@ export const OBTC = new Token(
   OBTC_CONTRACT_ADDRESSES,
   18,
   "OBTC",
-  "Oikos Bitcoin",
+  "bitcoin", // TODO: use actual oBTC rate when it is supported by coingecko?
   "OBTC",
   // TODO: oikos bitcoin logo
   sbtcLogo,
