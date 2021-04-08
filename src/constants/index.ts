@@ -188,7 +188,7 @@ export const RENBTC = new Token(
   renbtcLogo,
 )
 
-export const BTC_POOL_TOKENS = [BTCB, OBTC, RENBTC]
+export const BTC_POOL_TOKENS = [BTCB, RENBTC, OBTC]
 
 // maps a symbol string to a token object
 export const TOKENS_MAP: {
