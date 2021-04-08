@@ -17,21 +17,15 @@ function Risk(): ReactElement {
           <a href="https://github.com/derive-finance/derive-contract">
             {t("riskIntro2")}
           </a>{" "}
-          {t("riskIntro3")}
+          {t("riskIntro3")}{" "}
+          <a href="https://t.me/derivefinance">
+          {t("riskIntro4")}{" "}
+          </a>
+          {t("riskIntro5")}
         </p>
         <h3>{t("audits")}</h3>
         <p>
           {t("riskAudits")}{" "}
-          <a href="https://github.com/derive-finance/derive-audits">
-            {t("riskAudits2")}
-          </a>
-          {"."}
-          <br />
-          <br />
-          {t("riskAudits3")}
-          <br />
-          <br />
-          {t("riskAudits4")}
         </p>
         <h3>{t("adminKeys")}</h3>
         <p>{t("riskAdminKeys")}</p>
