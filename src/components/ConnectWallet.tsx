@@ -2,13 +2,15 @@ import "./ConnectWallet.scss"
 
 import React, { ReactElement } from "react"
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
-import { injected, walletconnect, walletlink } from "../connectors"
+import { injected, bsc /*, walletconnect, walletlink*/ } from "../connectors"
+import bscwalletIcon from "../assets/icons/BSCWallet.svg"
 
-import coinbasewalletIcon from "../assets/icons/coinbasewallet.svg"
+//import coinbasewalletIcon from "../assets/icons/coinbasewallet.svg"
 import { logEvent } from "../utils/googleAnalytics"
 import metamaskIcon from "../assets/icons/metamask.svg"
+
 import { useTranslation } from "react-i18next"
-import walletconnectIcon from "../assets/icons/walletconnect.svg"
+//import walletconnectIcon from "../assets/icons/walletconnect.svg"
 
 const wallets = [
   {
@@ -17,6 +19,11 @@ const wallets = [
     connector: injected,
   },
   {
+    name: "BSCWallet",
+    icon: bscwalletIcon,
+    connector: bsc,
+  },
+  /*{
     name: "Wallet Connect",
     icon: walletconnectIcon,
     connector: walletconnect,
@@ -25,7 +32,7 @@ const wallets = [
     name: "Coinbase Wallet",
     icon: coinbasewalletIcon,
     connector: walletlink,
-  },
+  },*/
 ]
 
 interface Props {
