@@ -2,12 +2,12 @@
 /* tslint:disable */
 
 import "./TopMenu.scss"
-import { ReactElement, useEffect } from "react"
+import React, { ReactElement } from "react"
 import { AppState } from "../state"
 import { Link } from "react-router-dom"
 
-import React from "react"
 import ThemeChanger from "./ThemeChanger"
+
 import Web3Status from "./Web3Status"
 import classNames from "classnames"
 import logoDark from "../assets/icons/logo-dark.svg"
@@ -23,15 +23,7 @@ function TopMenu({ activeTab }: Props): ReactElement {
   const { t } = useTranslation()
 
   const { userDarkMode } = useSelector((state: AppState) => state.user)
-  const [themedLogo, setThemedLogo] = React.useState("")
-
-  useEffect(() => {
-    if (userDarkMode) {
-      setThemedLogo(logoDark)
-    } else {
-      setThemedLogo(logoLight)
-    }
-  }, [userDarkMode])
+  const themedLogo = userDarkMode ? logoDark : logoLight
 
   return (
     <header className="top">
