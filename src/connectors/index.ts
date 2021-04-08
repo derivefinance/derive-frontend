@@ -3,6 +3,7 @@ import { NetworkConnector } from "@web3-react/network-connector"
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector"
 import { WalletLinkConnector } from "@web3-react/walletlink-connector"
 import { Web3Provider } from "@ethersproject/providers"
+import { BscConnector } from "@binance-chain/bsc-connector"
 
 const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
 export const NETWORK_CHAIN_ID: number = parseInt(
@@ -30,6 +31,10 @@ export function getNetworkLibrary(): Web3Provider {
 export const injected = new InjectedConnector({
   // mainnet, ropsten, rinkeby, goerli, kovan, local buidler
   // see: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
+  supportedChainIds: [56, 97],
+})
+
+export const bsc = new BscConnector({
   supportedChainIds: [56, 97],
 })
 
