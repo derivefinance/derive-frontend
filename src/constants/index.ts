@@ -240,3 +240,5 @@ export const SWAP_CONTRACT_GAS_ESTIMATES_MAP = {
   removeLiquidityImbalance: BigNumber.from("350000"), // 318231
   removeLiquidityOneToken: BigNumber.from("250000"), // 232947
 }
+
+export const OIKOS_TOKENS = [OBTC, OUSD]

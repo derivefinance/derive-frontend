@@ -8,6 +8,7 @@ import {
   RENBTC,
   USDC,
   USDT,
+  OIKOS_TOKENS
 } from "../../constants"
 
 import { BigNumber } from "@ethersproject/bignumber"
@@ -22,6 +23,7 @@ import { useTokenContract } from "../../hooks/useContract"
 export function useTokenBalance(t: Token): BigNumber {
   const { account, chainId } = useActiveWeb3React()
   const [balance, setBalance] = useState<BigNumber>(Zero)
+  const isOikosToken = OIKOS_TOKENS.includes(t)
 
   const tokenContract = useTokenContract(t) as Erc20
 
@@ -29,7 +31,14 @@ export function useTokenBalance(t: Token): BigNumber {
     async function pollBalance(): Promise<void> {
       let newBalance
       try {
-        newBalance = account ? await tokenContract?.balanceOf(account) : Zero
+        if (!account) {
+          newBalance = Zero
+        } else if (isOikosToken) {
+          /* eslint-disable */
+          newBalance = await tokenContract?.transferableSynths(account) as BigNumber
+        } else {
+          newBalance = await tokenContract?.balanceOf(account)
+        }
       } catch (err) {
         console.error("Error fetching balance for token", tokenContract)
         throw err

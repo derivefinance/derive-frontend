@@ -151,6 +151,12 @@ export function useApproveAndDeposit(
       )
       if (poolName === BTC_POOL_NAME) {
         const swapGuardedContract = swapContract as SwapGuarded
+        console.debug('addLiquidity(amounts, minToMint, deadline, merkleProof): ', [
+          txnAmounts,
+          minToMint,
+          txnDeadline,
+          [],
+        ])
         spendTransaction = await swapGuardedContract?.addLiquidity(
           txnAmounts,
           minToMint,

@@ -14,6 +14,7 @@ import {
   Token,
   USDC,
   USDT,
+  OIKOS_TOKENS,
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -30,6 +31,30 @@ import { SwapFlashLoan } from "../../types/ethers-contracts/SwapFlashLoan"
 import { SwapGuarded } from "../../types/ethers-contracts/SwapGuarded"
 import { getContract } from "../utils"
 import { useActiveWeb3React } from "./index"
+
+
+const OIKOS_ERC20_ABI = [
+  ...ERC20_ABI,
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "transferableSynths",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
 
 // returns null on errors
 function useContract(
@@ -61,7 +86,11 @@ export function useTokenContract(
 ): Contract | null {
   const { chainId } = useActiveWeb3React()
   const tokenAddress = chainId ? t.addresses[chainId] : undefined
-  return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
+  const isOikosToken = OIKOS_TOKENS.includes(t)
+  /* eslint-disable */
+  const abi = isOikosToken ? OIKOS_ERC20_ABI : ERC20_ABI;
+  const contract = useContract(tokenAddress, abi, withSignerIfPossible)
+  return contract
 }
 
 export function useSwapBTCContract(): SwapGuarded | null {
