@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "12.18.3"
   REACT_APP_CONTEXT = "production"
-  CI = "false"
+  CI = ""
 
 [[redirects]]
   from = "/*"

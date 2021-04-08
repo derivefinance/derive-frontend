@@ -140,7 +140,7 @@ export const OUSD = new Token(
   18,
   "OUSD",
   "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
-  "Oikos USD",
+  "oUSD",
   // TODO: ousd logo
   usdtLogo,
 )
@@ -170,7 +170,7 @@ export const OBTC = new Token(
   18,
   "OBTC",
   "bitcoin", // TODO: use actual oBTC rate when it is supported by coingecko?
-  "OBTC",
+  "oBTC",
   // TODO: oikos bitcoin logo
   sbtcLogo,
 )
