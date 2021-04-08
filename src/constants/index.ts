@@ -3,8 +3,8 @@ import daiLogo from "../assets/icons/dai.svg"
 import deriveLogo from "../assets/icons/logo-dark.svg"
 import ousdLogo from "../assets/icons/ousd.svg"
 import renbtcLogo from "../assets/icons/renbtc.svg"
-import sbtcLogo from "../assets/icons/sbtc.svg"
-import tbtcLogo from "../assets/icons/tbtc.svg"
+import sbtcLogo from "../assets/icons/obtc.svg"
+import tbtcLogo from "../assets/icons/btcb.svg"
 import usdcLogo from "../assets/icons/usdc.svg"
 import usdtLogo from "../assets/icons/usdt.svg"
 
@@ -158,7 +158,7 @@ export const BTCB = new Token(
   18,
   "BTCB",
   "binance-bitcoin", // coingecko id
-  "BTCb",
+  "BTCB",
   tbtcLogo,
 )
 
