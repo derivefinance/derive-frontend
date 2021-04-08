@@ -213,6 +213,8 @@ function Swap(): ReactElement {
       if (amountToGive.isZero()) {
         amountToReceive = Zero
       } else {
+        console.log([tokenIndexFrom, tokenIndexTo, amountToGive])
+        console.log(activePool.contract)
         amountToReceive = await activePool.contract.calculateSwap(
           tokenIndexFrom,
           tokenIndexTo,

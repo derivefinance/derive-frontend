@@ -45,7 +45,7 @@ export class Token {
 export const BLOCK_TIME = 15000
 
 export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xc4BA33879BcFbAbccF11627d2f60565Fc3c90Fe8",
+  [ChainId.MAINNET]: "0xA726A51b8Fe5f027ce5039E6400864Fd0BDCB10F",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -62,7 +62,7 @@ export const MERKLETREE_DATA: { [chainId in ChainId]: string } = {
 export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
-  [ChainId.MAINNET]: "0x2A61Fb982D829831743c712eE9A4Ab2ABe5FD6d5",
+  [ChainId.MAINNET]: "0x2f2B80e513aCe1F0F5a4D0aF6c5eDfAb75BC0De9",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
