@@ -33,7 +33,7 @@ export default function App(): ReactElement {
   const [isModalOpen, setIsModalOpen] = useState(false)
   // show ConnectWallet modal on each new page if not connected to wallet
   useEffect(() => {
-    const shouldShowModal = !account && pathname !== "/risk"
+    const shouldShowModal = !account && pathname !== "/about"
     setIsModalOpen(shouldShowModal)
   }, [pathname, account])
 
@@ -96,7 +96,7 @@ export default function App(): ReactElement {
                 <Withdraw {...props} poolName={STABLECOIN_POOL_NAME} />
               )}
             />
-            <Route exact path="/risk" component={Risk} />
+            <Route exact path="/about" component={Risk} />
           </Switch>
         </ToastsProvider>
       </Web3ReactManager>
