@@ -31,6 +31,21 @@ function Risk(): ReactElement {
         <p>{t("riskAdminKeys")}</p>
         <h3>{t("lossOfPeg")}</h3>
         <p>{t("riskLossOfPeg")}</p>
+        <h3>{t("contact")}</h3>
+
+        <p>{t("contactInfo")}  
+        <a href="https://t.me/derivefinance">
+          {t("email")}{" "}
+          </a> 
+          {t("staffInfo")}  
+        <a href="https://t.me/derivefinance">
+          {t("telegram")}
+          </a> 
+          {t("twitter")}{" "}
+          <a href="https://twitter.com/derivefinance">
+          {t("twitterInfo")}
+          </a>
+          </p>          
       </div>
     </div>
   )
