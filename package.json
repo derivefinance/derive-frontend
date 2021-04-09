@@ -94,8 +94,7 @@
   },
   "homepage": ".",
   "husky": {
-    "hooks": {
-    }
+    "hooks": {}
   },
   "browserslist": {
     "production": [
