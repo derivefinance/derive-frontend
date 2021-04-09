@@ -11,8 +11,10 @@ function Risk(): ReactElement {
   return (
     <div className="riskpage">
       <TopMenu activeTab={t("risk")} />
+
       <div className="content">
         <p>
+        <h3>{t("about")}</h3>
           {t("riskIntro")}{" "}
           <a href="https://github.com/derive-finance/derive-contract">
             {t("riskIntro2")}
