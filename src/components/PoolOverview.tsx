@@ -64,7 +64,7 @@ function PoolOverview({
           <div className="right">
             {poolData?.oikosApr.gt(Zero) && (
               <div className="Apr">
-                <span className="label">OIKOS APR</span>
+                <span className="label">APR</span>
                 <span
                   className={
                     classNames({ plus: formattedData.apr }) +
