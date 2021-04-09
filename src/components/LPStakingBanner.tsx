@@ -12,7 +12,7 @@ function LPStakingBanner(): ReactElement {
       <p>
         {t("lpMustStakeForRewards")} &lt;
         <a
-          href="https://dashboard.oikos.network/liquidity"
+          href="https://minter.oikos.cash"
           target="_blank"
           rel="noopener noreferrer"
         >

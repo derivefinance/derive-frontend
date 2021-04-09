@@ -105,13 +105,13 @@ const DepositPage = (props: Props): ReactElement => {
               <div className="transactionInfo">
                 {poolData?.oikosApr.gt(Zero) && (
                   <div className="transactionInfoItem">
-                    <a
+                    {/*<a
                       href="https://docs.derive.finance/faq#what-are-derives-liquidity-provider-rewards"
                       target="_blank"
                       rel="noopener noreferrer"
-                    >
-                      <span>{`OIKOS APR:`}</span>
-                    </a>{" "}
+                    >*/}
+                      <span>{`APR:`}</span>
+                    {/*</a>*/}{" "}
                     <span className="value">
                       {formatBNToPercentString(poolData.oikosApr, 18)}
                     </span>
