@@ -20,13 +20,13 @@ function MyShareCard({ data }: Props): ReactElement | null {
   const formattedData = {
     share: formatBNToPercentString(data.share, 18),
     usdBalance: commify(formatBNToString(data.usdBalance, 18, 2)),
-    value: commify(formatBNToString(data.value, 18, 6)),
+    value: commify(formatBNToString(data.value, 18, 2)),
     tokens: data.tokens.map((coin) => {
       const token = TOKENS_MAP[coin.symbol]
       return {
         symbol: token.symbol,
         name: token.name,
-        value: commify(formatBNToString(coin.value, 18, 6)),
+        value: commify(formatBNToString(coin.value, 18, 2)),
       }
     }),
   }
