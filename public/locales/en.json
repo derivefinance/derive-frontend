@@ -99,5 +99,12 @@
   "withdrawal": "Withdrawal",
   "withdrawPercentage": "Withdraw percentage",
   "yes": "Yes",
-  "youWillReceive": "You will receive"
+  "youWillReceive": "You will receive",
+  "contact": "Contact us",
+  "contactInfo": "You can reach us via email at ",
+  "email": "support@derive.fi",
+  "staffInfo": "or via our ",
+  "telegram" : "Telegram channel",
+  "twitter": ". Follow us on",
+  "twitterInfo": "Twitter."
 }
