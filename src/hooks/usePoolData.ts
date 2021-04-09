@@ -173,7 +173,7 @@ export default function usePoolData(
       }
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
-      const oikosAPRNumerator = BigNumber.from(52 * rewards)
+      const oikosAPRNumerator = BigNumber.from(13 * rewards)
         .mul(BigNumber.from(10).pow(18))
         .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
       const oikosAPRDenominator = totalLpTokenBalance
