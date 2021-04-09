@@ -167,7 +167,7 @@ export default function usePoolData(
       //rewards for pool
       let rewards
       if (poolName === BTC_POOL_NAME) {
-        rewards = 137000;
+        rewards = 0;
       } else {
         rewards = 370000
       }
