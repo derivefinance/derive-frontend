@@ -169,7 +169,7 @@ export default function usePoolData(
       if (poolName === BTC_POOL_NAME) {
         rewards = 0;
       } else {
-        rewards = 370000
+        rewards = 240000
       }
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
