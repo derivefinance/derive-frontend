@@ -26,6 +26,9 @@ header.top {
       @include breakpoint(md) {
         margin-right: 0.2em;
       }
+      @include breakpoint(sm) {
+        display: none;
+      }
       &:hover {
         cursor: pointer;
       }
