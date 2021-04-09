@@ -23,10 +23,6 @@ function Risk(): ReactElement {
           </a>
           {t("riskIntro5")}
         </p>
-        <h3>{t("audits")}</h3>
-        <p>
-          {t("riskAudits")}{" "}
-        </p>
         <h3>{t("adminKeys")}</h3>
         <p>{t("riskAdminKeys")}</p>
         <h3>{t("lossOfPeg")}</h3>
@@ -41,7 +37,10 @@ function Risk(): ReactElement {
         {t("stablecoin")}{" "}
         </a>
         </p>
-
+        <h3>{t("audits")}</h3>
+        <p>
+          {t("riskAudits")}{" "}
+        </p>
         <h3>{t("contact")}</h3>
         <p>{t("contactInfo")}  
         <a href="mailto:support@derive.fi">
