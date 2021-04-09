@@ -1,3 +1,4 @@
+
 import { AddressZero, Zero } from "@ethersproject/constants"
 import {
   BTC_POOL_NAME,
@@ -163,13 +164,19 @@ export default function usePoolData(
         : tokenBalancesUSDSum
             .mul(BigNumber.from(10).pow(18))
             .div(tokenBalancesSum)
-
-      // (weeksPerYear * KEEPPerWeek * KEEPPrice) / (BTCPrice * BTCInPool)
+      //rewards for pool
+      let rewards
+      if (poolName === BTC_POOL_NAME) {
+        rewards = 137000;
+      } else {
+        rewards = 370000
+      }
+      // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
-      const keepAPRNumerator = BigNumber.from(52 * 137000)
+      const oikosAPRNumerator = BigNumber.from(52 * rewards)
         .mul(BigNumber.from(10).pow(18))
         .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
-      const keepAPRDenominator = totalLpTokenBalance
+      const oikosAPRDenominator = totalLpTokenBalance
         .mul(
           parseUnits(
             String(tokenPricesUSD[comparisonPoolToken.symbol] || 0),
@@ -179,9 +186,10 @@ export default function usePoolData(
         .div(1e6)
 
       const oikosApr = totalLpTokenBalance.isZero()
-        ? keepAPRNumerator
-        : keepAPRNumerator.div(keepAPRDenominator)
+        ? oikosAPRNumerator
+        : oikosAPRNumerator.div(oikosAPRDenominator)
 
+ 
       // User share data
       const userShare = userLpTokenBalance
         .mul(BigNumber.from(10).pow(18))
@@ -242,9 +250,10 @@ export default function usePoolData(
         volume: "XXX", // TODO
         utilization: "XXX", // TODO
         apy: "XXX", // TODO
-        oikosApr: poolName === BTC_POOL_NAME ? oikosApr : Zero,
+        oikosApr,
         lpTokenPriceUSD,
       }
+      //poolName === BTC_POOL_NAME ? oikosApr : Zero,
       const userShareData = account
         ? {
             name: poolName,
