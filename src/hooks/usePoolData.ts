@@ -165,15 +165,18 @@ export default function usePoolData(
             .mul(BigNumber.from(10).pow(18))
             .div(tokenBalancesSum)
       //rewards for pool
-      let rewards
+      let rewards, extra
       if (poolName === BTC_POOL_NAME) {
         rewards = 0;
+        extra = 0;
+
       } else {
         rewards = 240000
+        extra = 3000000;
       }
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
-      const oikosAPRNumerator = BigNumber.from((13 * rewards)+3000000)
+      const oikosAPRNumerator = BigNumber.from((13 * rewards) + extra)
         .mul(BigNumber.from(10).pow(18))
         .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
       const oikosAPRDenominator = totalLpTokenBalance
