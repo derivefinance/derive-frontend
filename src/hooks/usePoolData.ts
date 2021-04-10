@@ -172,7 +172,7 @@ export default function usePoolData(
 
       } else {
         rewards = 240000
-        extra = 3000000;
+        extra = 5000000;
       }
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
       const comparisonPoolToken = POOL.poolTokens[0]
