@@ -31,7 +31,7 @@ function Risk(): ReactElement {
         <p>{t("riskLossOfPeg")}</p>
         <h3>{t("smartContracts")}</h3>
         <p>{t("smartContractsInfo")}
-        <a href="https://github.com/derivefinance" target="_blank" rel="noreferrer" >
+        <a href="https://github.com/derivefinance/derive-contracts" target="_blank" rel="noreferrer" >
           {t("github")}{" "}
         </a>  
         {t("verified")}{" "}
