@@ -50,9 +50,7 @@ function Risk(): ReactElement {
           {t("auditResults")}{" "}
           </a>
           {t("auditResults2")}
-        </a> 
-          
-        </p>
+         </p>
         <h3>{t("contact")}</h3>
         <p>{t("contactInfo")}  
         <a href="mailto:support@derive.fi">
