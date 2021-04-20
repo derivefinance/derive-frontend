@@ -41,7 +41,14 @@ function Risk(): ReactElement {
         </p>
         <h3>{t("audits")}</h3>
         <p>
-          {t("riskAudits")}{" "}
+          {t("riskAudits")}
+        <a href="https://cybercrimeshield.org" target="_blank" rel="noreferrer" >
+          {t("riskAudits2")}
+          {t("riskAudits3")}
+          {t("auditResults")}
+          {t("auditResults2")}
+        </a> 
+          
         </p>
         <h3>{t("contact")}</h3>
         <p>{t("contactInfo")}  
