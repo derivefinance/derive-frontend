@@ -67,6 +67,14 @@ function TopMenu({ activeTab }: Props): ReactElement {
             {t("risk")}
           </Link>
         </li>
+        <li>
+          <Link
+            to="/tokenomics"
+            className={classNames({ active: activeTab === t("DRV") })}
+          >
+            {t("DRV")}
+          </Link>
+        </li>        
       </ul>
       <Web3Status />
       <ThemeChanger />
