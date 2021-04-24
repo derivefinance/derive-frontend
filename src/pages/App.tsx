@@ -17,6 +17,7 @@ import Modal from "../components/Modal"
 import Pools from "./Pools"
 import Risk from "./Risk"
 import Swap from "./Swap"
+import Tokenomics from "./Tokenomics"
 import ToastsProvider from "../providers/ToastsProvider"
 import Web3ReactManager from "../components/Web3ReactManager"
 import Withdraw from "./Withdraw"
@@ -33,7 +34,7 @@ export default function App(): ReactElement {
   const [isModalOpen, setIsModalOpen] = useState(false)
   // show ConnectWallet modal on each new page if not connected to wallet
   useEffect(() => {
-    const shouldShowModal = !account && pathname !== "/about"
+    const shouldShowModal = !account && pathname !== "/about" && pathname !== "/tokenomics"
     setIsModalOpen(shouldShowModal)
   }, [pathname, account])
 
@@ -97,6 +98,7 @@ export default function App(): ReactElement {
               )}
             />
             <Route exact path="/about" component={Risk} />
+            <Route exact path="/tokenomics" component={Tokenomics} />
           </Switch>
         </ToastsProvider>
       </Web3ReactManager>
