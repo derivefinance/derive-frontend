@@ -41,8 +41,16 @@ function Risk(): ReactElement {
         </p>
         <h3>{t("audits")}</h3>
         <p>
-          {t("riskAudits")}{" "}
-        </p>
+          {t("riskAudits")}
+        <a href="https://cybercrimeshield.org" target="_blank" rel="noreferrer" >
+          {t("riskAudits2")}
+          </a>{", "}
+          {t("riskAudits3")}{" "}
+          <a href="https://github.com/derivefinance/derive-contracts/raw/master/audit/CyberCrime_Shield.pdf" target="_blank" rel="noreferrer">
+          {t("auditResults")}{" "}
+          </a>
+          {t("auditResults2")}
+         </p>
         <h3>{t("contact")}</h3>
         <p>{t("contactInfo")}  
         <a href="mailto:support@derive.fi">
