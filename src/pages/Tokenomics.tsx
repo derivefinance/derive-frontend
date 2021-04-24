@@ -42,7 +42,7 @@ function Tokenomics(): ReactElement {
         <h3>{"How to get DRV?"}</h3>
         <p>{"Liquidity providers on the Derive platform receive DRV incentives for doing so. This ensures the protocol offers low fees and extremely low slippage. "}</p>
         <h3>{"Escrow contracts"}</h3>
-        <p>{"DRV are subject to a 2-4 years vesting period on our escrow contracts. The escrow contracts source code is available on our "}<a href="https://bscscan.com/token/0x4aC8B09860519d5A17B6ad8c86603aa2f07860d6" target="_blank" rel="noreferrer">{"Github"}</a></p>        
+        <p>{"DRV are subject to a 2-4 years vesting period on our escrow contracts. The escrow contracts source code is available on our "}<a href="https://github.com/derivefinance/derive-escrow" target="_blank" rel="noreferrer">{"Github"}</a></p>        
         <h3>{"The DAO"}</h3>
         <p>{"WIP - Coming soon"}</p>
       </div>
