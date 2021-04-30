@@ -26,7 +26,11 @@ import fetchTokenPricesUSD from "../utils/updateTokenPrices"
 import { useActiveWeb3React } from "../hooks/"
 import { useDispatch } from "react-redux"
 import usePoller from "../hooks/usePoller"
-
+import styled from 'styled-components';
+import { useSelector } from "react-redux"
+import { AppState } from "../state"
+import logoDark from "../assets/icons/logo-dark.svg"
+import logoLight from "../assets/icons/logo-light.svg"
 export default function App(): ReactElement {
   const dispatch = useDispatch<AppDispatch>()
   const { pathname } = useLocation()
@@ -47,10 +51,39 @@ export default function App(): ReactElement {
   usePoller(fetchAndUpdateGasPrice, BLOCK_TIME)
   usePoller(fetchAndUpdateTokensPrice, BLOCK_TIME * 3)
 
+  const Announcement = styled.div`
+	width: 100%;
+	display: block;
+	background-color: #0E0D14;
+	border-bottom: 2px solid #000;
+	text-align: center;
+	color: #46bf89;
+	font-size: 1em;
+	font-weight: bold;
+	& a {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		display: block;
+		color: #46bf89;
+		font-weight: bold;
+		text-decoration: none;
+	}`;
+
+
+  const { userDarkMode } = useSelector((state: AppState) => state.user)
+
+
+	const bgColor = userDarkMode ? '#0E0D14' : 'white';
+	const border = `2px solid ${ userDarkMode ? '#0E0D14' : 'white'}`;
   return (
     <Suspense fallback={null}>
       <Web3ReactManager>
         <ToastsProvider>
+        <Announcement style={{ backgroundColor:`${bgColor}`, borderBottom: `${border}`}} >
+					<a href="https://bit.ly/3e4jKjt" target="_blank" rel="noreferrer">
+						DRV Token holder? Earn up to 23% APR by staking your tokens, read more by clicking here.
+					</a>
+				</Announcement>			
           <Modal
             isOpen={isModalOpen}
             onClose={(): void => setIsModalOpen(false)}
