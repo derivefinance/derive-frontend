@@ -81,7 +81,7 @@ export default function App(): ReactElement {
         <ToastsProvider>
         <Announcement style={{ backgroundColor:`${bgColor}`, borderBottom: `${border}`}} >
 					<a href="https://bit.ly/3e4jKjt" target="_blank" rel="noreferrer">
-						DRV Token holder? Earn up to 23% APR by staking your tokens, read more by clicking here.
+						DRV Token holder? Earn up to 800% APR by staking your tokens, read more by clicking here.
 					</a>
 				</Announcement>			
           <Modal
