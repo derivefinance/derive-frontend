@@ -69,9 +69,7 @@ export default function App(): ReactElement {
 		text-decoration: none;
 	}`;
 
-
   const { userDarkMode } = useSelector((state: AppState) => state.user)
-
 
 	const bgColor = userDarkMode ? '#0E0D14' : 'white';
 	const border = `2px solid ${ userDarkMode ? '#0E0D14' : 'white'}`;
@@ -81,7 +79,7 @@ export default function App(): ReactElement {
         <ToastsProvider>
         <Announcement style={{ backgroundColor:`${bgColor}`, borderBottom: `${border}`}} >
 					<a href="https://bit.ly/3e4jKjt" target="_blank" rel="noreferrer">
-						DRV Token holder? Earn up to 800% APR by staking your tokens, read more by clicking here.
+						DRV Token holder? Earn up to 350% APR by staking your tokens, read more by clicking here.
 					</a>
 				</Announcement>			
           <Modal
