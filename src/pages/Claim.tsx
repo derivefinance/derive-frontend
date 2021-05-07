@@ -44,6 +44,7 @@ function Claim(): ReactElement {
         const balance = await OikosRewards?.balanceOf(account)
         // @ts-ignore
         const staked = await DrvRewards?.balanceOf(account)
+        console.log(staked?.toString())
         // @ts-ignore
         const rewards = await DrvRewards?.earned(account)
         // @ts-ignore
@@ -104,7 +105,7 @@ function Claim(): ReactElement {
                         variant="primary"
                         size="lg"
                         width="160px"
-                        disabled={Number(LPBalance) == 0}
+                        disabled={Number(LPBalance) == 0 || Number(StakedBalance) > 0} 
                         onClick={(): void => {
                             // @ts-ignore
                             void checkAndApproveTokenForTrade(
