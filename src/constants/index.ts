@@ -92,6 +92,19 @@ export const STABLECOIN_SWAP_TOKEN = new Token(
   deriveLogo,
 )
 
+const PANCAKE_DRV_CONTRACT_ADDRESS: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x2ee9c2ce331feb7ae40ab2d5667dfde09a80f99e",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const PANCAKE_DRV_CONTRACT = new Token(
+  PANCAKE_DRV_CONTRACT_ADDRESS,
+  18,
+  "deriveUSD",
+  "deriveusd",
+  "derive DAI/USDC/USDT/OUSD",
+  deriveLogo,
+)
+
 // Stablecoins
 const DAI_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
@@ -288,3 +301,4 @@ export const SWAP_CONTRACT_GAS_ESTIMATES_MAP = {
 export const DERIVE_TOKENS = [DRV]
 export const OIKOS_TOKENS = [OBTC, OUSD]
 export const REWARD_CONTRACTS = [OIKOS_REWARD, DRV_REWARD]
+export const PANCAKE_CONTRACTS = [PANCAKE_DRV_CONTRACT]
