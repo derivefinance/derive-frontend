@@ -146,6 +146,50 @@ export const OUSD = new Token(
   ousdLogo,
 )
 
+const DRV_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x4ac8b09860519d5a17b6ad8c86603aa2f07860d6",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const DRV = new Token(
+  DRV_CONTRACT_ADDRESSES,
+  18,
+  "DRV",
+  "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
+  "Derive DAO Token",
+  // TODO: ousd logo
+  ousdLogo,
+)
+
+const OIKOS_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x8517c11E0459eec933391476eAe41613e9E52A1d",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const OIKOS_REWARD = new Token(
+  OIKOS_REWARD_CONTRACT_ADDRESSES,
+  18,
+  "OIKOSREWARD",
+  "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
+  "OIKOSREWARD",
+  // TODO: ousd logo
+  ousdLogo,
+)
+
+const DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x3c4c5839264CdA774b7640cCb9643917610034E2",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const DRV_REWARD = new Token(
+  DRV_REWARD_CONTRACT_ADDRESSES,
+  18,
+  "DRVREWARD",
+  "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
+  "DRVREWARD",
+  // TODO: ousd logo
+  ousdLogo,
+)
+
+
+
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
 
 // Tokenized BTC
@@ -205,13 +249,13 @@ export const POOLS_MAP: {
     poolTokens: Token[]
   }
 } = {
-  [BTC_POOL_NAME]: {
-    lpToken: BTC_SWAP_TOKEN,
-    poolTokens: BTC_POOL_TOKENS,
-  },
   [STABLECOIN_POOL_NAME]: {
     lpToken: STABLECOIN_SWAP_TOKEN,
     poolTokens: STABLECOIN_POOL_TOKENS,
+  },
+  [BTC_POOL_NAME]: {
+    lpToken: BTC_SWAP_TOKEN,
+    poolTokens: BTC_POOL_TOKENS,
   },
 }
 
@@ -241,4 +285,6 @@ export const SWAP_CONTRACT_GAS_ESTIMATES_MAP = {
   removeLiquidityOneToken: BigNumber.from("250000"), // 232947
 }
 
+export const DERIVE_TOKENS = [DRV]
 export const OIKOS_TOKENS = [OBTC, OUSD]
+export const REWARD_CONTRACTS = [OIKOS_REWARD, DRV_REWARD]
