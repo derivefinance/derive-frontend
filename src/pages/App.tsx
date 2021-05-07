@@ -18,6 +18,7 @@ import Pools from "./Pools"
 import Risk from "./Risk"
 import Swap from "./Swap"
 import Tokenomics from "./Tokenomics"
+import Claim from "./Claim"
 import ToastsProvider from "../providers/ToastsProvider"
 import Web3ReactManager from "../components/Web3ReactManager"
 import Withdraw from "./Withdraw"
@@ -130,6 +131,8 @@ export default function App(): ReactElement {
             />
             <Route exact path="/about" component={Risk} />
             <Route exact path="/tokenomics" component={Tokenomics} />
+            <Route exact path="/claim" component={Claim} />
+
           </Switch>
         </ToastsProvider>
       </Web3ReactManager>
