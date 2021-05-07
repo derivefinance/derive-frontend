@@ -16,7 +16,8 @@ import {
   USDT,
   OIKOS_TOKENS,
   REWARD_CONTRACTS,
-  DERIVE_TOKENS
+  DERIVE_TOKENS,
+  PANCAKE_CONTRACTS
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -34,6 +35,32 @@ import { SwapGuarded } from "../../types/ethers-contracts/SwapGuarded"
 import { getContract } from "../utils"
 import { useActiveWeb3React } from "./index"
 
+
+const PANCAKE_ABI = [
+  ...ERC20_ABI,
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getReserves",
+    "outputs": [
+    {
+      "name": "_reserve0",
+      "type": "uint112",
+    },
+    {
+      "name": "_reserve1",
+      "type": "uint112",
+    },
+    {
+      "name": "_blockTimestampLast",
+      "type": "uint32",
+    },
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function",
+  },
+]
 
 const OIKOS_ERC20_ABI = [
   ...ERC20_ABI,
@@ -158,9 +185,12 @@ export function useTokenContract(
   const tokenAddress = chainId ? t.addresses[chainId] : undefined
   const isOikosToken = OIKOS_TOKENS.includes(t)
   const isRewardsContract = REWARD_CONTRACTS.includes(t)
+  const isPancakeContract = PANCAKE_CONTRACTS.includes(t)
   /* eslint-disable */
   let abi = isOikosToken ? OIKOS_ERC20_ABI : ERC20_ABI ;
   abi = isRewardsContract ? OIKOS_REWARD_ABI : abi;
+  abi = isPancakeContract ? PANCAKE_ABI : abi;
+
   const contract = useContract(tokenAddress, abi, withSignerIfPossible)
   return contract
 }
@@ -235,7 +265,7 @@ export function useAllContracts(): AllContractsObject | null {
   const oikosRewardContract = useTokenContract(REWARD_CONTRACTS[0]) as Erc20
   const drvRewardContract = useTokenContract(REWARD_CONTRACTS[1]) as Erc20
   const drvContract = useTokenContract(DERIVE_TOKENS[0]) as Erc20
-  
+  const pancakeDRVContract = useTokenContract(PANCAKE_CONTRACTS[0]) as Erc20
   const btcSwapTokenContract = useTokenContract(
     BTC_SWAP_TOKEN,
   ) as LpTokenGuarded
@@ -257,7 +287,8 @@ export function useAllContracts(): AllContractsObject | null {
         drvRewardContract,
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
-        drvContract
+        drvContract,
+        pancakeDRVContract
       ].some(Boolean)
     )
       return null
@@ -272,6 +303,7 @@ export function useAllContracts(): AllContractsObject | null {
       ["OikosRewards"]: oikosRewardContract,
       ["DrvRewards"]: drvRewardContract,
       ["DRV"]: drvContract,
+      ["PancakeDRV"]: pancakeDRVContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
     }
@@ -287,6 +319,7 @@ export function useAllContracts(): AllContractsObject | null {
     drvRewardContract,
     btcSwapTokenContract,
     stablecoinSwapTokenContract,
-    drvContract
+    drvContract,
+    pancakeDRVContract
   ])
 }
