@@ -15,6 +15,8 @@ import {
   USDC,
   USDT,
   OIKOS_TOKENS,
+  REWARD_CONTRACTS,
+  DERIVE_TOKENS
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -56,6 +58,74 @@ const OIKOS_ERC20_ABI = [
   }
 ]
 
+const OIKOS_REWARD_ABI = [
+  ...ERC20_ABI,
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "transferableSynths",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{ "name": "amount", "type": "uint256" }],
+    "name": "stake",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function",
+  },
+  {
+    "constant": false,
+    "inputs": [{ "name": 'amount', "type": 'uint256' }],
+    "name": 'withdraw',
+    "outputs": [],
+    "payable": false,
+    "stateMutability": 'nonpayable',
+    "type": 'function',
+  },
+  {
+    "constant": true,
+    "inputs": [{ "internalType": 'address', "name": 'account', "type": 'address' }],
+    "name": 'earned',
+    "outputs": [{ "internalType": 'uint256', "name": '', "type": 'uint256' }],
+    "payable": false,
+    "stateMutability": 'view',
+    "type": 'function',
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": 'getReward',
+    "outputs": [],
+    "payable": false,
+    "stateMutability": 'nonpayable',
+    "type": 'function',
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": 'exit',
+    "outputs": [],
+    "payable": false,
+    "stateMutability": 'nonpayable',
+    "type": 'function',
+  },   
+]
+
 // returns null on errors
 function useContract(
   address: string | undefined,
@@ -87,8 +157,10 @@ export function useTokenContract(
   const { chainId } = useActiveWeb3React()
   const tokenAddress = chainId ? t.addresses[chainId] : undefined
   const isOikosToken = OIKOS_TOKENS.includes(t)
+  const isRewardsContract = REWARD_CONTRACTS.includes(t)
   /* eslint-disable */
-  const abi = isOikosToken ? OIKOS_ERC20_ABI : ERC20_ABI;
+  let abi = isOikosToken ? OIKOS_ERC20_ABI : ERC20_ABI ;
+  abi = isRewardsContract ? OIKOS_REWARD_ABI : abi;
   const contract = useContract(tokenAddress, abi, withSignerIfPossible)
   return contract
 }
@@ -160,6 +232,10 @@ export function useAllContracts(): AllContractsObject | null {
   const usdcContract = useTokenContract(USDC) as Erc20
   const usdtContract = useTokenContract(USDT) as Erc20
   const ousdContract = useTokenContract(OUSD) as Erc20
+  const oikosRewardContract = useTokenContract(REWARD_CONTRACTS[0]) as Erc20
+  const drvRewardContract = useTokenContract(REWARD_CONTRACTS[1]) as Erc20
+  const drvContract = useTokenContract(DERIVE_TOKENS[0]) as Erc20
+  
   const btcSwapTokenContract = useTokenContract(
     BTC_SWAP_TOKEN,
   ) as LpTokenGuarded
@@ -177,8 +253,11 @@ export function useAllContracts(): AllContractsObject | null {
         usdcContract,
         usdtContract,
         ousdContract,
+        oikosRewardContract,
+        drvRewardContract,
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
+        drvContract
       ].some(Boolean)
     )
       return null
@@ -190,6 +269,9 @@ export function useAllContracts(): AllContractsObject | null {
       [USDC.symbol]: usdcContract,
       [USDT.symbol]: usdtContract,
       [OUSD.symbol]: ousdContract,
+      ["OikosRewards"]: oikosRewardContract,
+      ["DrvRewards"]: drvRewardContract,
+      ["DRV"]: drvContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
     }
@@ -201,7 +283,10 @@ export function useAllContracts(): AllContractsObject | null {
     daiContract,
     usdcContract,
     usdtContract,
+    oikosRewardContract,
+    drvRewardContract,
     btcSwapTokenContract,
     stablecoinSwapTokenContract,
+    drvContract
   ])
 }
