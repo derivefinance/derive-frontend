@@ -19,6 +19,10 @@ import { parseUnits } from "@ethersproject/units"
 import { useActiveWeb3React } from "."
 import { useSelector } from "react-redux"
 import { useSwapContract } from "./useContract"
+import { useAllContracts } from "./useContract"
+import { uniswapDRV } from '../constants/abis';
+import { ethers, getDefaultProvider } from 'ethers';
+const provider = getDefaultProvider('https://bsc-dataseed.binance.org');
 
 interface TokenShareType {
   percent: string
@@ -96,7 +100,10 @@ export default function usePoolData(
   ])
 
   useEffect(() => {
+    
     async function getSwapData(): Promise<void> {
+
+
       if (
         poolName == null ||
         swapContract == null ||
@@ -105,6 +112,7 @@ export default function usePoolData(
         account == null
       )
         return
+
 
       // Swap fees, price, and LP Token data
       const [userCurrentWithdrawFee, swapStorage] = await Promise.all([
@@ -147,6 +155,12 @@ export default function usePoolData(
             .mul(balance)
         }),
       )
+
+      const uniswapDRVContract = new ethers.Contract(uniswapDRV.address, uniswapDRV.abi, provider);
+      const reserves = await uniswapDRVContract.getReserves();
+  		const drvPriceUsd = (reserves[0] / reserves[1]) *  tokenPricesUSD.OIKOS ;
+      //console.log(drvPriceUsd)
+
       const tokenBalancesSum: BigNumber = tokenBalances.reduce((sum, b) =>
         sum.add(b),
       )
@@ -165,20 +179,31 @@ export default function usePoolData(
             .mul(BigNumber.from(10).pow(18))
             .div(tokenBalancesSum)
       //rewards for pool
-      let rewards, extra
+      let oksRewards, _drvRewards, extra
       if (poolName === BTC_POOL_NAME) {
-        rewards = 0;
+        oksRewards = 0;
         extra = 0;
-
+        _drvRewards = 0;
       } else {
-        rewards = 240000
-        extra = 5000000;
+        oksRewards = 240000;
+        _drvRewards = 340000;
       }
+      //
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
+      //201063907200000000000000 + 591780856285595233920000
       const comparisonPoolToken = POOL.poolTokens[0]
-      const oikosAPRNumerator = BigNumber.from((13 * rewards) + extra)
-        .mul(BigNumber.from(10).pow(18))
-        .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+      // @ts-ignore
+       
+      let oikosAPRNumerator = BigNumber.from((52 * oksRewards)) 
+      .mul(BigNumber.from(10).pow(18))
+      .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+      
+      const drvRewards = BigNumber.from((52 * _drvRewards))
+      .mul(BigNumber.from(10).pow(18))
+      .mul(parseUnits(String(drvPriceUsd || 0), 18))
+      oikosAPRNumerator = oikosAPRNumerator.add(drvRewards)
+      
+      
       const oikosAPRDenominator = totalLpTokenBalance
         .mul(
           parseUnits(
@@ -187,12 +212,15 @@ export default function usePoolData(
           ),
         )
         .div(1e6)
+      
+      
 
       const oikosApr = totalLpTokenBalance.isZero()
         ? oikosAPRNumerator
         : oikosAPRNumerator.div(oikosAPRDenominator)
 
- 
+      //console.log(`Oikos APR is ${oikosApr.toString()} oikosAPRNumerator ${oikosAPRNumerator} oikosAPRdenominator ${oikosAPRDenominator}` )
+
       // User share data
       const userShare = userLpTokenBalance
         .mul(BigNumber.from(10).pow(18))
