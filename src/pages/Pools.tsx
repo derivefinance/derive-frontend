@@ -22,14 +22,14 @@ function Pools({
       <div className={styles.content}>
         <h3 className={styles.title}>{t("selectAPool")}</h3>
         <PoolOverview
-          poolData={btcPoolData}
-          to={`/${action}/btc`}
-          userShareData={btcUserShareData}
-        />
-        <PoolOverview
           poolData={usdPoolData}
           to={`/${action}/usd`}
           userShareData={usdUserShareData}
+        />
+        <PoolOverview
+          poolData={btcPoolData}
+          to={`/${action}/btc`}
+          userShareData={btcUserShareData}
         />
       </div>
     </div>
