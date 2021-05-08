@@ -17,7 +17,8 @@ import {
   OIKOS_TOKENS,
   REWARD_CONTRACTS,
   DERIVE_TOKENS,
-  PANCAKE_CONTRACTS
+  PANCAKE_CONTRACTS,
+  OLD_DRV_REWARD
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -266,6 +267,7 @@ export function useAllContracts(): AllContractsObject | null {
   const drvRewardContract = useTokenContract(REWARD_CONTRACTS[1]) as Erc20
   const drvContract = useTokenContract(DERIVE_TOKENS[0]) as Erc20
   const pancakeDRVContract = useTokenContract(PANCAKE_CONTRACTS[0]) as Erc20
+  const oldDrvRewardContract = useTokenContract(REWARD_CONTRACTS[2]) as Erc20
   const btcSwapTokenContract = useTokenContract(
     BTC_SWAP_TOKEN,
   ) as LpTokenGuarded
@@ -288,7 +290,8 @@ export function useAllContracts(): AllContractsObject | null {
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
         drvContract,
-        pancakeDRVContract
+        pancakeDRVContract,
+        oldDrvRewardContract
       ].some(Boolean)
     )
       return null
@@ -302,6 +305,7 @@ export function useAllContracts(): AllContractsObject | null {
       [OUSD.symbol]: ousdContract,
       ["OikosRewards"]: oikosRewardContract,
       ["DrvRewards"]: drvRewardContract,
+      ["OldDrvRewards"]: oldDrvRewardContract,
       ["DRV"]: drvContract,
       ["PancakeDRV"]: pancakeDRVContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
@@ -320,6 +324,7 @@ export function useAllContracts(): AllContractsObject | null {
     btcSwapTokenContract,
     stablecoinSwapTokenContract,
     drvContract,
-    pancakeDRVContract
+    pancakeDRVContract,
+    oldDrvRewardContract
   ])
 }

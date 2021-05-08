@@ -187,8 +187,22 @@ export const OIKOS_REWARD = new Token(
   ousdLogo,
 )
 
+const OLD_DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const OLD_DRV_REWARD = new Token(
+  OLD_DRV_REWARD_CONTRACT_ADDRESSES,
+  18,
+  "DRVREWARD",
+  "dai", // TODO: use actual oUSD rate when it is supported by coingecko?
+  "DRVREWARD",
+  // TODO: ousd logo
+  ousdLogo,
+)
+
 const DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x56e18212011bf4a00817DBF55A501ED174D7A6AF",
+  [ChainId.MAINNET]: "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const DRV_REWARD = new Token(
@@ -200,8 +214,6 @@ export const DRV_REWARD = new Token(
   // TODO: ousd logo
   ousdLogo,
 )
-
-
 
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
 
@@ -300,5 +312,5 @@ export const SWAP_CONTRACT_GAS_ESTIMATES_MAP = {
 
 export const DERIVE_TOKENS = [DRV]
 export const OIKOS_TOKENS = [OBTC, OUSD]
-export const REWARD_CONTRACTS = [OIKOS_REWARD, DRV_REWARD]
+export const REWARD_CONTRACTS = [OIKOS_REWARD, DRV_REWARD, OLD_DRV_REWARD]
 export const PANCAKE_CONTRACTS = [PANCAKE_DRV_CONTRACT]
