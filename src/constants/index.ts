@@ -188,7 +188,7 @@ export const OIKOS_REWARD = new Token(
 )
 
 const OLD_DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
+  [ChainId.MAINNET]: "0x56e18212011bf4a00817dbf55a501ed174d7a6af",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const OLD_DRV_REWARD = new Token(
