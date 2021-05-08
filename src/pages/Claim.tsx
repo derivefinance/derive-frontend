@@ -226,7 +226,7 @@ function Claim(): ReactElement {
                         width="160px"
                         onClick={(): void => {
                             // @ts-ignore
-                            OldDrvRewards?.getReward( gasOptions )
+                            OldDrvRewards?.exit( gasOptions )
                         }}                                                   
                         >
                         {"Claim All"}
