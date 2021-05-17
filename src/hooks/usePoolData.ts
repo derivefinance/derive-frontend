@@ -158,7 +158,7 @@ export default function usePoolData(
 
       const uniswapDRVContract = new ethers.Contract(uniswapDRV.address, uniswapDRV.abi, provider);
       const reserves = await uniswapDRVContract.getReserves();
-  		const drvPriceUsd = (reserves[0] / reserves[1]) *  tokenPricesUSD.OIKOS ;
+  		const drvPriceUsd = ((reserves[0] / reserves[1]) *  tokenPricesUSD.OIKOS).toFixed(4) ;
       //console.log(drvPriceUsd)
 
       const tokenBalancesSum: BigNumber = tokenBalances.reduce((sum, b) =>
@@ -197,6 +197,8 @@ export default function usePoolData(
       let oikosAPRNumerator = BigNumber.from((52 * oksRewards)) 
       .mul(BigNumber.from(10).pow(18))
       .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+      
+      console.log(`DRV price is ${drvPriceUsd}`);
       
       const drvRewards = BigNumber.from((52 * _drvRewards))
       .mul(BigNumber.from(10).pow(18))
