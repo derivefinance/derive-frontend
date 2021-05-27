@@ -36,7 +36,7 @@ export default async function checkAndApproveTokenForTrade(
   if (spendingValue.eq(0)) return
 
   let tokenName
-  if (swapAddress == "0x6a10F7691503b215EcF70B851d4b45774B6f7E4D") {
+  if (swapAddress == "0xe29eFb8D9a3499e25521705c17b10FA4B390A27c") {
     tokenName = "OIKOS-LP"
   } else {
     tokenName = await srcTokenContract.name()
