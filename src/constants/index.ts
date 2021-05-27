@@ -202,7 +202,7 @@ export const OLD_DRV_REWARD = new Token(
 )
 
 const DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x7c9F6c3e13dB21Fd022693C2fDa92dcF52E6b9a5", 
+  [ChainId.MAINNET]: "0x6a10F7691503b215EcF70B851d4b45774B6f7E4D", 
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const DRV_REWARD = new Token(
