@@ -108,8 +108,8 @@ function Claim(): ReactElement {
             <span className="label bold">{`${"Your DRV balance"}: `}</span>
             <span className="value">{Number(DRVBalance).toFixed(6)}  {" DRV"}</span>
             </div>          
-
-            <div className="twoColumn">
+            
+            <div className="twoColumnA" >
             <div className="infoItem">
                     <Button
                         variant="primary"
@@ -121,7 +121,7 @@ function Claim(): ReactElement {
                             void checkAndApproveTokenForTrade(
                                 // @ts-ignore
                                 OikosRewards,
-                                "0x6a10F7691503b215EcF70B851d4b45774B6f7E4D",
+                                "0xe29eFb8D9a3499e25521705c17b10FA4B390A27c",
                                 account,
                                 parseUnits(`${LPBalance}`),
                                 false,
@@ -198,7 +198,7 @@ function Claim(): ReactElement {
                     {"Unstake"}
                     </Button>
             </div>
-            <div className="infoItem">
+            {/*<div className="infoItem">
                     <Button
                         variant="primary"
                         size="lg"
@@ -215,7 +215,7 @@ function Claim(): ReactElement {
 
 
 
-            </div>          
+                      </div>   */}       
             </div>
             <br />
             { oldRewards > 0 ? <div>
