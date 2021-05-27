@@ -1,3 +1,4 @@
+
 import "./Risk.scss"
 import "../components/PoolInfoCard.scss"
 import { useAllContracts } from "../hooks/useContract"
@@ -120,7 +121,7 @@ function Claim(): ReactElement {
                             void checkAndApproveTokenForTrade(
                                 // @ts-ignore
                                 OikosRewards,
-                                "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
+                                "0x7c9F6c3e13dB21Fd022693C2fDa92dcF52E6b9a5",
                                 account,
                                 parseUnits(`${LPBalance}`),
                                 false,
