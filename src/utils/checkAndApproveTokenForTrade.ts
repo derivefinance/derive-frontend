@@ -60,7 +60,7 @@ export default async function checkAndApproveTokenForTrade(
     await approve(MaxUint256)
   }
 
-  //if (existingAllowance.gte(spendingValue)) return
+  if (existingAllowance.gte(spendingValue)) return
 
   async function approve(amount: BigNumber): Promise<void> {
     try {
