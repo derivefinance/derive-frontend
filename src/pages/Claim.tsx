@@ -87,7 +87,7 @@ function Claim(): ReactElement {
 
         
             <p>Are you a stablecoin LP provider? Maximize your yield farming by staking your Oikos LP tokens and obtain DRV rewards.
-            Here you can stake your tokens, claim rewards and exit completely.</p>
+            Here you can stake your tokens, claim rewards and exit completely. <br /><br /><label style={{color:"red",fontWeight:"bold"}}>Warning, do not unstake your deriveUSD from Oikos Minter while staking on this page. Your rewards would be reset and you would lose your earnings.</label></p>
 
             <div className="poolInfoCard">
         <h4>{"Dashboard"}</h4>
