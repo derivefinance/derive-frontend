@@ -36,7 +36,7 @@ export default async function checkAndApproveTokenForTrade(
   if (spendingValue.eq(0)) return
 
   let tokenName
-  if (swapAddress == "0x7c9F6c3e13dB21Fd022693C2fDa92dcF52E6b9a5") {
+  if (swapAddress == "0x6a10F7691503b215EcF70B851d4b45774B6f7E4D") {
     tokenName = "OIKOS-LP"
   } else {
     tokenName = await srcTokenContract.name()
@@ -60,7 +60,7 @@ export default async function checkAndApproveTokenForTrade(
     await approve(MaxUint256)
   }
 
-  if (existingAllowance.gte(spendingValue)) return
+  //if (existingAllowance.gte(spendingValue) && !infiniteApproval) return
 
   async function approve(amount: BigNumber): Promise<void> {
     try {

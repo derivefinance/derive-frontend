@@ -121,7 +121,7 @@ function Claim(): ReactElement {
                             void checkAndApproveTokenForTrade(
                                 // @ts-ignore
                                 OikosRewards,
-                                "0x7c9F6c3e13dB21Fd022693C2fDa92dcF52E6b9a5",
+                                "0x6a10F7691503b215EcF70B851d4b45774B6f7E4D",
                                 account,
                                 parseUnits(`${LPBalance}`),
                                 false,
