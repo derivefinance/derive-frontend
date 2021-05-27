@@ -28,6 +28,20 @@ div.poolInfoCard {
     }
   }
 
+
+  .twoColumnA {
+    margin-top: 16px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 6px;
+
+  }
+
+  .twoColumnA > div {
+    margin: 6px;
+  }
+
+
   .twoColumn {
     margin-top: 16px;
     display: flex;
