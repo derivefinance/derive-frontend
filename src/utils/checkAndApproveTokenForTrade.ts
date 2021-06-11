@@ -34,34 +34,15 @@ export default async function checkAndApproveTokenForTrade(
 ): Promise<void> {
   if (srcTokenContract == null) return
   if (spendingValue.eq(0)) return
-
-  let tokenName
-  if (swapAddress == "0xe29eFb8D9a3499e25521705c17b10FA4B390A27c") {
-    tokenName = "OIKOS-LP"
-  } else {
-    tokenName = await srcTokenContract.name()
-  }
-
+  const tokenName = await srcTokenContract.name()
   const existingAllowance = await srcTokenContract.allowance(
     spenderAddress,
     swapAddress,
   )
   console.log(
-    `Existing ${tokenName} Allowance: ${existingAllowance.toString()} ${infiniteApproval} ${existingAllowance.gte(spendingValue)} ${ existingAllowance.eq(MaxUint256)}`,
+    `Existing ${tokenName} Allowance: ${existingAllowance.toString()}`,
   )
-
-  if (!infiniteApproval && existingAllowance.eq(MaxUint256)) {
-    console.log(`Resetting infinite approval`)
-    await approve(Zero)
-  }
-
-  if (infiniteApproval && existingAllowance.lt(MaxUint256)) {
-    console.log(`Enabling infinite approval`)
-    await approve(MaxUint256)
-  }
-
-  //if (existingAllowance.gte(spendingValue) && !infiniteApproval) return
-
+  if (existingAllowance.gte(spendingValue)) return
   async function approve(amount: BigNumber): Promise<void> {
     try {
       const cleanupOnStart = callbacks.onTransactionStart?.()
