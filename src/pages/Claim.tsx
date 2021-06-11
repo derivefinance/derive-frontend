@@ -116,54 +116,11 @@ function Claim(): ReactElement {
                         size="lg"
                         width="160px"
                         disabled={Number(LPBalance) == 0 || Number(StakedBalance) > 0} 
+                        // @ts-ignore
                         onClick={(): void => {
                             // @ts-ignore
-                            void checkAndApproveTokenForTrade(
-                                // @ts-ignore
-                                OikosRewards,
-                                "0xe29eFb8D9a3499e25521705c17b10FA4B390A27c",
-                                account,
-                                parseUnits(`${LPBalance}`),
-                                false,
-                                {
-                                  onTransactionStart: () => {
-                                    // @ts-ignore
-                                    return addToast(
-                                      {
-                                        type: "pending",
-                                        title: `Approving spend for ${
-                                          "OIKOS-LP"
-                                        }`,
-                                      },
-                                      {
-                                        autoDismiss: false, // TODO: be careful of orphan toasts on error
-                                      },
-                                    )
-                                  },
-                                  onTransactionSuccess: () => {
-                                    DrvRewards?.stake( toWei(`${LPBalance}`), gasOptions )
-                                    return addToast({
-                                      type: "success",
-                                      title: `Successfully approved spend for ${
-                                        "OIKOS-LP"
-                                      }`,
-                                    })
-                                    
-                                  },
-                                  onTransactionError: () => {
-                                    //throw new Error("Your transaction could not be completed")
-                                    console.log("Your transaction could not be completed")
-                                    clearToasts()
-                                    return addToast({
-                                        type: "error",
-                                        title: `Your transaction could not be completed`
-                                        ,
-                                      })
-                                  },
-                                },
-                              ) 
-                              
-                          
+                            void DrvRewards?.stake( toWei(`${LPBalance}`), gasOptions )
+
                             
                         }}                        
                         >
