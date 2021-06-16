@@ -128,7 +128,7 @@ const OIKOS_REWARD_ABI = [
   {
     "constant": true,
     "inputs": [{ "internalType": 'address', "name": 'account', "type": 'address' }],
-    "name": 'earned',
+    "name": 'rewards',
     "outputs": [{ "internalType": 'uint256', "name": '', "type": 'uint256' }],
     "payable": false,
     "stateMutability": 'view',
