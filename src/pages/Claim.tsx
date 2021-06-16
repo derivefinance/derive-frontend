@@ -49,11 +49,12 @@ function Claim(): ReactElement {
         const balance = await OikosRewards?.balanceOf(account)
         // @ts-ignore
         const staked = await DrvRewards?.balanceOf(account)
+
         console.log(staked?.toString())
         // @ts-ignore
-        const rewards = await DrvRewards?.earned(account)
+        const rewards = await DrvRewards?.rewards(account)
         // @ts-ignore
-        const oldRewards = await OldDrvRewards?.earned(account)        
+        const oldRewards = 0; //await OldDrvRewards?.earned(account)        
         // @ts-ignore
         const drvBalance = await DRV?.balanceOf(account)
 
