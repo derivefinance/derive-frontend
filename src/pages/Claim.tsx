@@ -52,7 +52,7 @@ function Claim(): ReactElement {
 
         console.log(staked?.toString())
         // @ts-ignore
-        const rewards = await DrvRewards?.rewards(account)
+        const rewards = await DrvRewards?.earned(account)
         // @ts-ignore
         const oldRewards = 0; //await OldDrvRewards?.earned(account)        
         // @ts-ignore
