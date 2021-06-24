@@ -16,7 +16,7 @@ function Risk(): ReactElement {
         <p>
         <h3>{t("about")}</h3>
           {t("riskIntro")}{" "}
-          <a href="https://github.com/derivefinance/derive-contract">
+          <a href="https://github.com/derivefinance/derive-contracts">
             {t("riskIntro2")}
           </a>{" "}
           {t("riskIntro3")}{" "}
