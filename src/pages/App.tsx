@@ -1,6 +1,6 @@
 import "../styles/global.scss"
 
-import { BLOCK_TIME, BTC_POOL_NAME, STABLECOIN_POOL_NAME } from "../constants"
+import { BLOCK_TIME, BTC_POOL_NAME, STABLECOIN_POOL_NAME, VENUS_POOL_NAME } from "../constants"
 import React, {
   ReactElement,
   Suspense,
@@ -80,7 +80,7 @@ export default function App(): ReactElement {
         <ToastsProvider>
         <Announcement style={{ backgroundColor:`${bgColor}`, borderBottom: `${border}`}} >
 					<a href="https://bit.ly/3e4jKjt" target="_blank" rel="noreferrer">
-						DRV Token holder? Earn up to 350% APR by staking your tokens, read more by clicking here.
+						DRV Token holder? Earn passive income by staking your tokens, read more by clicking here.
 					</a>
 				</Announcement>			
           <Modal
@@ -112,6 +112,13 @@ export default function App(): ReactElement {
             />
             <Route
               exact
+              path="/deposit/venus"
+              render={(props) => (
+                <Deposit {...props} poolName={VENUS_POOL_NAME} />
+              )}
+            />            
+            <Route
+              exact
               path="/withdraw"
               render={(props) => <Pools {...props} action="withdraw" />}
             />
@@ -122,6 +129,13 @@ export default function App(): ReactElement {
                 <Withdraw {...props} poolName={BTC_POOL_NAME} />
               )}
             />
+            <Route
+              exact
+              path="/withdraw/venus"
+              render={(props) => (
+                <Withdraw {...props} poolName={VENUS_POOL_NAME} />
+              )}
+            />            
             <Route
               exact
               path="/withdraw/usd"
