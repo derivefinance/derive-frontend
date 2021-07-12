@@ -5,6 +5,7 @@ import {
   POOLS_MAP,
   PoolName,
   TRANSACTION_TYPES,
+  VENUS_POOL_NAME,
 } from "../constants"
 import { formatBNToPercentString, getContract } from "../utils"
 import { useEffect, useState } from "react"
@@ -76,6 +77,7 @@ const emptyPoolData = {
 export default function usePoolData(
   poolName: PoolName,
 ): PoolDataHookReturnType {
+   
   const { account, library } = useActiveWeb3React()
   const swapContract = useSwapContract(poolName)
   const { tokenPricesUSD, lastTransactionTimes } = useSelector(
@@ -166,10 +168,13 @@ export default function usePoolData(
       )
       const tokenBalancesUSD = POOL.poolTokens.map((token, i) => {
         const balance = tokenBalances[i]
-        return balance
+      console.log(parseUnits(String(tokenPricesUSD[token.symbol] || 0), 18))
+
+         return balance
           .mul(parseUnits(String(tokenPricesUSD[token.symbol] || 0), 18))
           .div(BigNumber.from(10).pow(18))
       })
+
       const tokenBalancesUSDSum: BigNumber = tokenBalancesUSD.reduce((sum, b) =>
         sum.add(b),
       )
@@ -178,9 +183,10 @@ export default function usePoolData(
         : tokenBalancesUSDSum
             .mul(BigNumber.from(10).pow(18))
             .div(tokenBalancesSum)
+
       //rewards for pool
       let oksRewards, _drvRewards, extra
-      if (poolName === BTC_POOL_NAME) {
+      if (poolName === BTC_POOL_NAME || poolName === VENUS_POOL_NAME)  {
         oksRewards = 0;
         extra = 0;
         _drvRewards = 0;
@@ -188,40 +194,89 @@ export default function usePoolData(
         oksRewards = 240000;
         _drvRewards = 340000;
       }
-      //
       // (weeksPerYear * OIKOSPerWeek * OIKOSPrice) / (BTCPrice * BTCInPool)
-      //201063907200000000000000 + 591780856285595233920000
       const comparisonPoolToken = POOL.poolTokens[0]
       // @ts-ignore
-       
-      let oikosAPRNumerator = BigNumber.from((52 * oksRewards)) 
-      .mul(BigNumber.from(10).pow(18))
-      .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
-      
-      console.log(`DRV price is ${drvPriceUsd}`);
-      
-      const drvRewards = BigNumber.from((52 * _drvRewards))
-      .mul(BigNumber.from(10).pow(18))
-      .mul(parseUnits(String(drvPriceUsd || 0), 18))
-      oikosAPRNumerator = oikosAPRNumerator.add(drvRewards)
-      
-      
-      const oikosAPRDenominator = totalLpTokenBalance
-        .mul(
-          parseUnits(
-            String(tokenPricesUSD[comparisonPoolToken.symbol] || 0),
-            6,
-          ),
-        )
-        .div(1e6)
-      
-      
+      let oikosAPRNumerator,
+          oikosAPRDenominator,
+          drvRewards, 
+          oikosApr
 
-      const oikosApr = totalLpTokenBalance.isZero()
-        ? oikosAPRNumerator
-        : oikosAPRNumerator.div(oikosAPRDenominator)
+      if (poolName === "Stablecoin Pool") {
+        oikosAPRNumerator = BigNumber.from((52 * oksRewards)) 
+        .mul(BigNumber.from(10).pow(18))
+        .mul(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+        const _drvPrice = Number(drvPriceUsd).toFixed(4)
+  
+        console.log(parseUnits(String(tokenPricesUSD.OIKOS || 0), 18))
+        console.log(`DRV price is ${_drvPrice}`);
+        
+        drvRewards = BigNumber.from((52 * _drvRewards))
+        .mul(BigNumber.from(10).pow(18))
+        .mul(parseUnits(String(_drvPrice || 0), 18))
+        oikosAPRNumerator = oikosAPRNumerator.add(drvRewards)
+        
+        console.log(parseUnits(String(_drvPrice || 0), 18))
+        oikosAPRDenominator = totalLpTokenBalance
+          .mul(
+            parseUnits(
+              String(tokenPricesUSD[comparisonPoolToken.symbol] || 0),
+              6,
+            ),
+          )
+          .div(1e6)
+  
+        console.log(parseUnits(
+          String(tokenPricesUSD[comparisonPoolToken.symbol] || 0),
+          6,
+        ))
+        oikosApr = totalLpTokenBalance.isZero()
+          ? oikosAPRNumerator
+          : oikosAPRNumerator.div(oikosAPRDenominator)
+        console.log(`Oikos APR is ${oikosApr}`)
 
-      //console.log(`Oikos APR is ${oikosApr.toString()} oikosAPRNumerator ${oikosAPRNumerator} oikosAPRdenominator ${oikosAPRDenominator}` )
+        //console.log(`Oikos APR is ${oikosApr.toString()} oikosAPRNumerator ${oikosAPRNumerator} oikosAPRdenominator ${oikosAPRDenominator}` )
+   
+      } else if (poolName === "vTokens Pool") {
+        //@ts-ignore
+        const fetchAPR = async() => {
+          let apr = 0;
+          const urls = [
+            'https://api.venus.io/api/market_history/graph?asset=0x95c78222b3d6e262426483d42cfa53685a67ab9d&type=1hr&limit=1',
+            'https://api.venus.io/api/market_history/graph?asset=0xeca88125a5adbe82614ffc12d0db554e2e2867c8&type=1hr&limit=1',
+            'https://api.venus.io/api/market_history/graph?asset=0xfd5840cd36d94d7229439859c0112a4185bc0255&type=1hr&limit=1'
+          ];
+          //@ts-ignore
+          const responses = await Promise.all(urls.map(u => {
+            const response = fetch(u)
+            //@ts-ignore
+            return response
+          }))
+          //@ts-ignore
+          const json = await Promise.all(responses.map(res => {
+            return res.json()
+          })) 
+          json.forEach(res => {
+            if (typeof res.data.result !== "undefined") {
+              //@ts-ignore
+              res.data.result.map((result) => {
+                apr = apr + Number(result.supplyApy)
+              })
+            } 
+          })
+          return apr
+        }
+
+        const o = await fetchAPR() ;
+        let apr2Str = o.toString();
+        apr2Str = apr2Str.replace(".", "");
+
+        oikosApr = BigNumber.from(apr2Str).mul(10);
+
+      } else {
+        oikosApr = BigNumber.from(0).pow(18);
+
+      }
 
       // User share data
       const userShare = userLpTokenBalance
@@ -231,7 +286,6 @@ export default function usePoolData(
             ? BigNumber.from("1")
             : totalLpTokenBalance,
       )
-
       const userPoolTokenBalances = tokenBalances.map((balance) => {
         return userShare.mul(balance).div(BigNumber.from(10).pow(18))
       })
@@ -283,7 +337,7 @@ export default function usePoolData(
         swapFee: swapFee,
         volume: "XXX", // TODO
         utilization: "XXX", // TODO
-        apy: "XXX", // TODO
+        apy: String(oikosApr), //oikosApr TODO
         oikosApr,
         lpTokenPriceUSD,
       }
@@ -300,6 +354,7 @@ export default function usePoolData(
             lpTokenBalance: userLpTokenBalance,
           }
         : null
+        //@ts-ignore
       setPoolData([poolData, userShareData])
     }
     void getSwapData()
