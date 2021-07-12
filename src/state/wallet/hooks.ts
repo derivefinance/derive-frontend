@@ -8,6 +8,10 @@ import {
   RENBTC,
   USDC,
   USDT,
+  VENUS_POOL_NAME,
+  VBUSD,
+  VUSDC,
+  VUSDT,
   OIKOS_TOKENS
 } from "../../constants"
 
@@ -41,9 +45,12 @@ export function useTokenBalance(t: Token): BigNumber {
         }
       } catch (err) {
         console.error("Error fetching balance for token", tokenContract)
-        throw err
+        //throw err
       }
       if (newBalance !== balance) {
+        if (typeof newBalance == "undefined") {
+          newBalance = BigNumber.from(10).pow(18)
+        }
         setBalance(newBalance)
       }
     }
@@ -65,6 +72,9 @@ export function usePoolTokenBalances(
   const usdcTokenBalance = useTokenBalance(USDC)
   const usdtTokenBalance = useTokenBalance(USDT)
   const ousdTokenBalance = useTokenBalance(OUSD)
+  const vbusdTokenBalance = useTokenBalance(VBUSD)
+  const vusdcTokenBalance = useTokenBalance(VUSDC)
+  const vusdtTokenBalance = useTokenBalance(VUSDT)  
   const btcPoolTokenBalances = useMemo(
     () => ({
       [BTCB.symbol]: btcbTokenBalance,
@@ -82,11 +92,20 @@ export function usePoolTokenBalances(
     }),
     [daiTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
   )
-
+  const venusPoolTokenBalances = useMemo(
+    () => ({
+      [VBUSD.symbol]: vbusdTokenBalance,
+      [VUSDC.symbol]: vusdcTokenBalance,
+      [VUSDT.symbol]: vusdtTokenBalance,
+    }),
+    [vbusdTokenBalance, vusdcTokenBalance, vusdtTokenBalance],
+  )
   if (poolName === BTC_POOL_NAME) {
     return btcPoolTokenBalances
   } else if (poolName === STABLECOIN_POOL_NAME) {
     return stablecoinPoolTokenBalances
+  }else if (poolName === VENUS_POOL_NAME) {
+    return venusPoolTokenBalances
   }
   return null
 }
