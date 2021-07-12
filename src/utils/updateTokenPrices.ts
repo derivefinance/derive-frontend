@@ -1,4 +1,4 @@
-import { BTC_POOL_TOKENS, STABLECOIN_POOL_TOKENS } from "../constants"
+import { BTC_POOL_TOKENS, STABLECOIN_POOL_TOKENS, VENUS_POOL_TOKENS } from "../constants"
 
 import { AppDispatch } from "../state"
 import retry from "async-retry"
@@ -13,10 +13,14 @@ interface CoinGeckoReponse {
 }
 
 export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
-  const tokens = BTC_POOL_TOKENS.concat(STABLECOIN_POOL_TOKENS)
+  const tokens = BTC_POOL_TOKENS
+  .concat(STABLECOIN_POOL_TOKENS)
+  .concat(VENUS_POOL_TOKENS)
+  
   const tokenIds = tokens
     .map(({ geckoId }) => geckoId)
     .concat(["binancecoin", "bitcoin", "oikos"])
+    console.log(tokenIds)
   void retry(
     () =>
       fetch(`${coinGeckoAPI}?ids=${encodeURIComponent(
@@ -35,6 +39,8 @@ export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
               OIKOS: body?.oikos?.usd,
             },
           )
+          //@ts-ignore
+          result.VBUSD = result.VUSDC
           dispatch(updateTokensPricesUSD(result))
         }),
     { retries: 3 },
