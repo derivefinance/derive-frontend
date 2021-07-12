@@ -4,6 +4,8 @@ import {
   STABLECOIN_POOL_NAME,
   STABLECOIN_POOL_TOKENS,
   TOKENS_MAP,
+  VENUS_POOL_NAME,
+  VENUS_POOL_TOKENS,
 } from "../constants"
 import React, { ReactElement, useCallback, useMemo, useState } from "react"
 import { calculateExchangeRate, shiftBNDecimals } from "../utils"
@@ -54,14 +56,22 @@ function Swap(): ReactElement {
   const approveAndSwap = useApproveAndSwap()
   const [btcPoolData] = usePoolData(BTC_POOL_NAME)
   const [usdPoolData] = usePoolData(STABLECOIN_POOL_NAME)
+  const [venusPoolData] = usePoolData(VENUS_POOL_NAME)
   const btcTokenBalances = usePoolTokenBalances(BTC_POOL_NAME)
   const usdTokenBalances = usePoolTokenBalances(STABLECOIN_POOL_NAME)
+  const venusTokenBalances = usePoolTokenBalances(VENUS_POOL_NAME)
+
   const btcSwapContract = useSwapContract(BTC_POOL_NAME)
   const usdSwapContract = useSwapContract(STABLECOIN_POOL_NAME)
+  const venusSwapContract = useSwapContract(VENUS_POOL_NAME)
+
   const { tokenPricesUSD, gasStandard, gasFast, gasInstant } = useSelector(
     (state: AppState) => state.application,
   )
-  const ALL_POOLS_TOKENS = BTC_POOL_TOKENS.concat(STABLECOIN_POOL_TOKENS)
+  const ALL_POOLS_TOKENS = BTC_POOL_TOKENS
+    .concat(STABLECOIN_POOL_TOKENS)
+    .concat(VENUS_POOL_TOKENS)
+
   function calculatePrice(
     amount: BigNumber | string,
     tokenPrice = 0,
@@ -98,6 +108,8 @@ function Swap(): ReactElement {
     return {
       ...(btcTokenBalances || {}),
       ...(usdTokenBalances || {}),
+      ...(venusTokenBalances || {}),
+
     }
   }, [btcTokenBalances, usdTokenBalances])
   const activePool = useMemo(() => {
@@ -105,6 +117,8 @@ function Swap(): ReactElement {
     const USD_POOL_SET = new Set(
       STABLECOIN_POOL_TOKENS.map(({ symbol }) => symbol),
     )
+    const VENUS_POOL_SET = new Set(VENUS_POOL_TOKENS.map(({ symbol }) => symbol))
+
     const ALL_POOLS_SET = new Set(ALL_POOLS_TOKENS.map(({ symbol }) => symbol))
     const One = BigNumber.from(10).pow(18)
     let activeSymbol = ""
@@ -129,6 +143,14 @@ function Swap(): ReactElement {
         contract: usdSwapContract,
         virtualPrice: usdPoolData?.virtualPrice || One,
       }
+    }  else if (VENUS_POOL_SET.has(activeSymbol)) {
+      return {
+        name: VENUS_POOL_NAME,
+        tokens: VENUS_POOL_TOKENS,
+        tokensSet: VENUS_POOL_SET,
+        contract: venusSwapContract,
+        virtualPrice: venusPoolData?.virtualPrice || One,
+      }
     } else {
       return {
         name: "ALL",
@@ -144,8 +166,10 @@ function Swap(): ReactElement {
     ALL_POOLS_TOKENS,
     usdSwapContract,
     btcSwapContract,
+    venusSwapContract,
     usdPoolData,
     btcPoolData,
+    venusPoolData,
   ])
   // build a representation of pool tokens for the UI
   const tokenOptions = useMemo(() => {
