@@ -18,7 +18,13 @@ import {
   REWARD_CONTRACTS,
   DERIVE_TOKENS,
   PANCAKE_CONTRACTS,
-  OLD_DRV_REWARD
+  OLD_DRV_REWARD,
+  VENUS_SWAP_ADDRESSES,
+  VENUS_POOL_NAME,
+  VENUS_SWAP_TOKEN,
+  VBUSD,
+  VUSDC,
+  VUSDT,
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -212,6 +218,14 @@ export function useSwapUSDContract(): SwapFlashLoan | null {
   ) as SwapFlashLoan
 }
 
+export function useSwapVENUSContract(): SwapFlashLoan | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(
+    chainId ? VENUS_SWAP_ADDRESSES[chainId] : undefined,
+    SWAP_FLASH_LOAN_ABI,
+  ) as SwapFlashLoan
+}
+
 export function useSwapContract<T extends PoolName>(
   poolName: T,
 ): T extends typeof BTC_POOL_NAME ? SwapGuarded | null : SwapFlashLoan | null
@@ -220,11 +234,16 @@ export function useSwapContract(
 ): SwapGuarded | SwapFlashLoan | null {
   const usdSwapContract = useSwapUSDContract()
   const btcSwapContract = useSwapBTCContract()
+  const venusSwapContract = useSwapVENUSContract()
+
   if (poolName === BTC_POOL_NAME) {
     return btcSwapContract
   } else if (poolName === STABLECOIN_POOL_NAME) {
     return usdSwapContract
+  }else if (poolName === VENUS_POOL_NAME) {
+    return venusSwapContract
   }
+
   return null
 }
 
@@ -263,6 +282,9 @@ export function useAllContracts(): AllContractsObject | null {
   const usdcContract = useTokenContract(USDC) as Erc20
   const usdtContract = useTokenContract(USDT) as Erc20
   const ousdContract = useTokenContract(OUSD) as Erc20
+  const vbusdContract = useTokenContract(VBUSD) as Erc20
+  const vusdcContract = useTokenContract(VUSDC) as Erc20
+  const vusdtContract = useTokenContract(VUSDT) as Erc20  
   const oikosRewardContract = useTokenContract(REWARD_CONTRACTS[0]) as Erc20
   const drvRewardContract = useTokenContract(REWARD_CONTRACTS[1]) as Erc20
   const drvContract = useTokenContract(DERIVE_TOKENS[0]) as Erc20
@@ -274,7 +296,9 @@ export function useAllContracts(): AllContractsObject | null {
   const stablecoinSwapTokenContract = useTokenContract(
     STABLECOIN_SWAP_TOKEN,
   ) as LpTokenUnguarded
-
+  const venusSwapTokenContract = useTokenContract(
+    VENUS_SWAP_TOKEN,
+  ) as LpTokenUnguarded
   return useMemo(() => {
     if (
       ![
@@ -285,10 +309,14 @@ export function useAllContracts(): AllContractsObject | null {
         usdcContract,
         usdtContract,
         ousdContract,
+        vbusdContract,
+        vusdcContract,
+        vusdtContract,
         oikosRewardContract,
         drvRewardContract,
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
+        venusSwapTokenContract,
         drvContract,
         pancakeDRVContract,
         oldDrvRewardContract
@@ -303,6 +331,9 @@ export function useAllContracts(): AllContractsObject | null {
       [USDC.symbol]: usdcContract,
       [USDT.symbol]: usdtContract,
       [OUSD.symbol]: ousdContract,
+      [VBUSD.symbol]: vbusdContract,
+      [VUSDC.symbol]: vusdcContract,
+      [VUSDT.symbol]: vusdtContract,      
       ["OikosRewards"]: oikosRewardContract,
       ["DrvRewards"]: drvRewardContract,
       ["OldDrvRewards"]: oldDrvRewardContract,
@@ -310,6 +341,7 @@ export function useAllContracts(): AllContractsObject | null {
       ["PancakeDRV"]: pancakeDRVContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
+      [VENUS_SWAP_TOKEN.symbol]: venusSwapTokenContract,
     }
   }, [
     btcbContract,
@@ -319,10 +351,14 @@ export function useAllContracts(): AllContractsObject | null {
     daiContract,
     usdcContract,
     usdtContract,
+    vusdtContract,
+    vusdcContract,
+    vbusdContract,
     oikosRewardContract,
     drvRewardContract,
     btcSwapTokenContract,
     stablecoinSwapTokenContract,
+    venusSwapTokenContract,
     drvContract,
     pancakeDRVContract,
     oldDrvRewardContract
