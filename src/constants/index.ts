@@ -7,11 +7,16 @@ import sbtcLogo from "../assets/icons/obtc.svg"
 import tbtcLogo from "../assets/icons/btcb.svg"
 import usdcLogo from "../assets/icons/usdc.svg"
 import usdtLogo from "../assets/icons/usdt.svg"
+import vbusdLogo from "../assets/icons/vBUSD.svg"
+import vusdcLogo from "../assets/icons/vBUSD.svg"
+import vusdtLogo from "../assets/icons/vBUSD.svg"
 
 export const NetworkContextName = "NETWORK"
 export const BTC_POOL_NAME = "BTC Pool"
 export const STABLECOIN_POOL_NAME = "Stablecoin Pool"
-export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME
+export const VENUS_POOL_NAME = "vTokens Pool"
+
+export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME | typeof VENUS_POOL_NAME
 
 export enum ChainId {
   MAINNET = 56,
@@ -50,6 +55,10 @@ export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
+export const VENUS_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0xF6cAf057F6c91E7aB2e5F84714075CaCBB986f47",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
 export const BTC_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0xF01EF8d5601f0275edE73e1cA67141e680bfDdbd",
   [ChainId.TESTNET]: "0xdeadbeef",
@@ -66,6 +75,15 @@ export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [ChainId.MAINNET]: "0x2f2B80e513aCe1F0F5a4D0aF6c5eDfAb75BC0De9",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
+
+export const VENUS_SWAP_TOKEN_CONTRACT_ADDRESSES: {
+  [chainId in ChainId]: string
+} = {
+  [ChainId.MAINNET]: "0xFd05Ca89560F3F6D80b82e1158EcAfb45031ACFf",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+
+
 
 export const BTC_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
@@ -89,6 +107,15 @@ export const STABLECOIN_SWAP_TOKEN = new Token(
   "deriveUSD",
   "deriveusd",
   "derive DAI/USDC/USDT/OUSD",
+  deriveLogo,
+)
+
+export const VENUS_SWAP_TOKEN = new Token(
+  VENUS_SWAP_TOKEN_CONTRACT_ADDRESSES,
+  18,
+  "deriveV",
+  "derivev",
+  "d-Venus",
   deriveLogo,
 )
 
@@ -144,6 +171,46 @@ export const USDT = new Token(
   "Tether",
   usdtLogo,
 )
+
+const VBUSD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x95c78222b3d6e262426483d42cfa53685a67ab9d",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const VBUSD = new Token(
+  VBUSD_CONTRACT_ADDRESSES,
+  8,
+  "VBUSD",
+  "venus-busd",
+  "(v)BUSD",
+  vbusdLogo,
+)
+
+const VUSDC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0xeca88125a5adbe82614ffc12d0db554e2e2867c8",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const VUSDC = new Token(
+  VUSDC_CONTRACT_ADDRESSES,
+  8,
+  "VUSDC",
+  "venus-usdc",
+  "(v)USDC",
+  vusdcLogo,
+)
+
+const VUSDT_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0xfd5840cd36d94d7229439859c0112a4185bc0255",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const VUSDT = new Token(
+  VUSDT_CONTRACT_ADDRESSES,
+  8,
+  "VUSDT",
+  "venus-usdt",
+  "(v)USDT",
+  vusdtLogo,
+)
+
 
 const OUSD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0x6bf2be9468314281cd28a94c35f967cafd388325",
@@ -216,6 +283,7 @@ export const DRV_REWARD = new Token(
 )
 
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
+export const VENUS_POOL_TOKENS = [VBUSD, VUSDC, VUSDT]
 
 // Tokenized BTC
 const BTCB_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
@@ -263,7 +331,7 @@ export const BTC_POOL_TOKENS = [BTCB, RENBTC, OBTC]
 // maps a symbol string to a token object
 export const TOKENS_MAP: {
   [symbol: string]: Token
-} = STABLECOIN_POOL_TOKENS.concat(BTC_POOL_TOKENS).reduce(
+} = STABLECOIN_POOL_TOKENS.concat(BTC_POOL_TOKENS).concat(VENUS_POOL_TOKENS).reduce(
   (acc, token) => ({ ...acc, [token.symbol]: token }),
   {},
 )
@@ -282,6 +350,10 @@ export const POOLS_MAP: {
     lpToken: BTC_SWAP_TOKEN,
     poolTokens: BTC_POOL_TOKENS,
   },
+  [VENUS_POOL_NAME]: {
+    lpToken: VENUS_SWAP_TOKEN,
+    poolTokens: VENUS_POOL_TOKENS,
+  },  
 }
 
 export const TRANSACTION_TYPES = {
