@@ -60,8 +60,12 @@ export function useApproveAndDeposit(
     const approveSingleToken = async (token: Token): Promise<void> => {
       const spendingValue = BigNumber.from(state[token.symbol].valueSafe)
       if (spendingValue.isZero()) return
+      console.log(tokenContracts?.["VBUSD"])
       const tokenContract = tokenContracts?.[token.symbol] as Erc20
-      if (tokenContract == null) return
+      
+      if (tokenContract == null || tokenContract == undefined) {
+        throw "error with token"
+      }
       await checkAndApproveTokenForTrade(
         tokenContract,
         swapContract.address,
@@ -100,6 +104,7 @@ export function useApproveAndDeposit(
     try {
       // For each token being deposited, check the allowance and approve it if necessary
       for (const token of POOL.poolTokens) {
+        console.dir(token, { depth: null })
         await approveSingleToken(token)
       }
 
@@ -109,6 +114,7 @@ export function useApproveAndDeposit(
           return await swapContract.getTokenBalance(i)
         }),
       )
+      
       const isFirstTransaction = poolTokenBalances.every((bal) => bal.isZero())
       let minToMint: BigNumber
       if (isFirstTransaction) {
@@ -142,14 +148,13 @@ export function useApproveAndDeposit(
         transactionDeadlineCustom,
       )
 
-      let spendTransaction
       const txnAmounts = POOL.poolTokens.map(
         ({ symbol }) => state[symbol].valueSafe,
       )
       const txnDeadline = Math.round(
         new Date().getTime() / 1000 + 60 * deadline,
       )
-      if (poolName === BTC_POOL_NAME) {
+      /*if (poolName === BTC_POOL_NAME) {
         const swapGuardedContract = swapContract as SwapGuarded
         console.debug('addLiquidity(amounts, minToMint, deadline, merkleProof): ', [
           txnAmounts,
@@ -166,9 +171,9 @@ export function useApproveAndDeposit(
             gasPrice,
           },
         )
-      } else {
+      } else {*/
         const swapFlashLoanContract = swapContract as SwapFlashLoan
-        spendTransaction = await swapFlashLoanContract?.addLiquidity(
+        const spendTransaction = await swapFlashLoanContract?.addLiquidity(
           txnAmounts,
           minToMint,
           txnDeadline,
@@ -176,7 +181,7 @@ export function useApproveAndDeposit(
             gasPrice,
           },
         )
-      }
+      //}
       await spendTransaction.wait()
       dispatch(
         updateLastTransactionTimes({
