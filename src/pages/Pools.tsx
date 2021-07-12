@@ -34,11 +34,11 @@ function Pools({
           userShareData={venusUserShareData}
         />   
            
-        {/*<PoolOverview
+        {<PoolOverview
           poolData={btcPoolData}
           to={`/${action}/btc`}
           userShareData={btcUserShareData}
-        />*/}
+        />}
       </div>
     </div>
   )

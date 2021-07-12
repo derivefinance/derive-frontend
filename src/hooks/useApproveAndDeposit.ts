@@ -154,7 +154,8 @@ export function useApproveAndDeposit(
       const txnDeadline = Math.round(
         new Date().getTime() / 1000 + 60 * deadline,
       )
-      /*if (poolName === BTC_POOL_NAME) {
+      let spendTransaction
+      if (poolName === BTC_POOL_NAME) {
         const swapGuardedContract = swapContract as SwapGuarded
         console.debug('addLiquidity(amounts, minToMint, deadline, merkleProof): ', [
           txnAmounts,
@@ -171,9 +172,9 @@ export function useApproveAndDeposit(
             gasPrice,
           },
         )
-      } else {*/
+      } else {
         const swapFlashLoanContract = swapContract as SwapFlashLoan
-        const spendTransaction = await swapFlashLoanContract?.addLiquidity(
+        spendTransaction = await swapFlashLoanContract?.addLiquidity(
           txnAmounts,
           minToMint,
           txnDeadline,
@@ -181,7 +182,7 @@ export function useApproveAndDeposit(
             gasPrice,
           },
         )
-      //}
+      }
       await spendTransaction.wait()
       dispatch(
         updateLastTransactionTimes({
