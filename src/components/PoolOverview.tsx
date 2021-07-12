@@ -10,6 +10,7 @@ import { Zero } from "@ethersproject/constants"
 import classNames from "classnames"
 import { commify } from "@ethersproject/units"
 import { useTranslation } from "react-i18next"
+import ToolTip from "../components/ToolTip"
 
 interface Props {
   to: string
@@ -40,13 +41,21 @@ function PoolOverview({
       }
     }),
   }
-
+  const readableName =  formattedData.name
   return (
     <div className="poolOverview">
-      <Link to={to}>
+      
         <div className="table">
-          <h4 className="title">{formattedData.name}</h4>
-          <div className="left">
+          <h4 className="title">
+          {formattedData.name == "vTokens Pool" ?           
+          <ToolTip content={t("venusProtocol")} >
+            <span className="label">{readableName}<a href="https://venus.io/" target="_new">
+              <span style={{fontSize:"14px",color:"var(--header-text)",marginLeft:"10px"}}>{"(Learn more)"}</span></a></span>
+          </ToolTip> : readableName }
+           </h4>
+
+            <Link to={to}>
+            <div className="left">
             <span style={{ marginRight: "8px" }}>[</span>
             {formattedData.tokens.map((token) => (
               <div className="token" key={token.symbol}>
@@ -60,6 +69,8 @@ function PoolOverview({
             ))}
             <span style={{ marginLeft: "-8px" }}>]</span>
           </div>
+          </Link>
+
 
           <div className="right">
             {poolData?.oikosApr.gt(Zero) && (
@@ -79,9 +90,10 @@ function PoolOverview({
               <span className="label">{t("currencyReserves")}</span>
               <span>{formattedData.reserve}</span>
             </div>
+            
           </div>
+          
         </div>
-      </Link>
     </div>
   )
 }
