@@ -125,5 +125,6 @@
   "staffInfo": "or via our ",
   "telegram" : "Telegram channel",
   "twitter": ". Follow us on",
-  "twitterInfo": "Twitter."
+  "twitterInfo": "Twitter.",
+  "venusProtocol": "Each asset supported by the Venus Protocol is integrated through a vToken contract, which is an EIP-20 compliant representation of balances supplied to the protocol. By minting vTokens, users earn interest through the vToken's exchange rate, which increases in value relative to the underlying asset, and gain the ability to use vTokens as collateral."
 }
