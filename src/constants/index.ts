@@ -241,7 +241,7 @@ export const DRV = new Token(
 )
 
 const OIKOS_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x8517c11E0459eec933391476eAe41613e9E52A1d",
+  [ChainId.MAINNET]: "0x6be8a4C0C4FF684E2e1Fc1F645d6d4f2a81fE00c",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const OIKOS_REWARD = new Token(
@@ -255,7 +255,7 @@ export const OIKOS_REWARD = new Token(
 )
 
 const OLD_DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0xe29eFb8D9a3499e25521705c17b10FA4B390A27c",// "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
+  [ChainId.MAINNET]: "0x4D756b9c83b5F3F37450B0aE30f42f043cA9Ccb3",// "0xf0DC62233E87Cb63EF2C85bf28E1CC0F9edB63eE",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const OLD_DRV_REWARD = new Token(
@@ -269,7 +269,7 @@ export const OLD_DRV_REWARD = new Token(
 )
 
 const DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x4D756b9c83b5F3F37450B0aE30f42f043cA9Ccb3", 
+  [ChainId.MAINNET]: "0x5914b993a7E1180cD95104b37B7Bd04A3A7eA3fb", 
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const DRV_REWARD = new Token(
