@@ -37,6 +37,7 @@
     "@typescript-eslint/restrict-template-expressions": ["off"],
     "sort-imports": 0,
     "no-invalid-this": 0,
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "react/prop-types": 0
   }
 }
