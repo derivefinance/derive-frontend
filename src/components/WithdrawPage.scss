@@ -1,12 +1,25 @@
 @import "../styles/theme.scss";
 @import "../styles/viewports";
 
+
+
+
 div.withdraw {
   min-height: 100vh;
-  background: var(--background-main);
   color: var(--text);
   padding-bottom: 40px;
   box-sizing: border-box; // Make the padding included in height calculation
+
+  .header {
+    width: 100%;
+    font-family: "Ubuntu";
+    margin-top: 24px;
+    margin-right: 0;
+    margin-bottom: 24px;
+    font-size: 30px;
+    font-weight: $bold;
+    color: var(--text-title);
+  }
 
   .content {
     width: 888px;
