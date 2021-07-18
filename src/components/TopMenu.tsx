@@ -61,10 +61,10 @@ function TopMenu({ activeTab }: Props): ReactElement {
         </li>
         <li>
           <Link
-              to="/claim"
-              className={classNames({ active: activeTab === "Claim" })}
+              to="/dao"
+              className={classNames({ active: activeTab === "DAO" })}
             >
-            {"Claim"}
+            {"DAO"}
           </Link>          
         </li>         
 
