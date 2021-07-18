@@ -23,6 +23,7 @@ import { useSwapContract } from "./useContract"
 import { useAllContracts } from "./useContract"
 import { uniswapDRV } from '../constants/abis';
 import { ethers, getDefaultProvider } from 'ethers';
+
 const provider = getDefaultProvider('https://bsc-dataseed.binance.org');
 
 interface TokenShareType {
@@ -102,10 +103,7 @@ export default function usePoolData(
   ])
 
   useEffect(() => {
-    
     async function getSwapData(): Promise<void> {
-
-
       if (
         poolName == null ||
         swapContract == null ||
@@ -114,7 +112,6 @@ export default function usePoolData(
         account == null
       )
         return
-
 
       // Swap fees, price, and LP Token data
       const [userCurrentWithdrawFee, swapStorage] = await Promise.all([
@@ -267,14 +264,14 @@ export default function usePoolData(
           return apr
         }
 
-        const o = await fetchAPR() ;
-        let apr2Str = o.toString();
-        apr2Str = apr2Str.replace(".", "");
+        const o = await fetchAPR()
+        let apr2Str = o.toString()
+        apr2Str = apr2Str.replace(".", "")
 
-        oikosApr = BigNumber.from(apr2Str).mul(10);
+        oikosApr = BigNumber.from(apr2Str).mul(10)
 
       } else {
-        oikosApr = BigNumber.from(0).pow(18);
+        oikosApr = BigNumber.from(0).pow(18)
 
       }
 
