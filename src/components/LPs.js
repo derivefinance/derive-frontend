@@ -149,7 +149,7 @@ export const LPs = ({
                                 className="btnRed"
                                 onClick={(): void => {
                                     // @ts-ignore
-                                    void props.lps.OldDrvRewards?.exit( gasOptions )
+                                    void props.lps.OldDrvRewards?.withdraw( toWei(`${props.lps.Staked}`), gasOptions)
                                 }}                                                   
                                 >
                                 {"Migrate"}
