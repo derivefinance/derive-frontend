@@ -104,9 +104,10 @@ const WithdrawPage = (props: Props): ReactElement => {
         <div className="content">
           <div className="left">
             <div className="form">
-              <h3>{t("withdraw")}</h3>
+              <span className="header">{t("withdraw")}</span>
               <div className="percentage">
                 <span>{`${t("withdrawPercentage")} (%):`}</span>
+                <br /><br /><br />
                 <input
                   placeholder="100"
                   onChange={(e: React.FormEvent<HTMLInputElement>): void =>
