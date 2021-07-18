@@ -11,12 +11,17 @@ import vbusdLogo from "../assets/icons/vBUSD.svg"
 import vusdcLogo from "../assets/icons/vBUSD.svg"
 import vusdtLogo from "../assets/icons/vBUSD.svg"
 
+import { REWARD_ESCROW_ABI } from "../helpers/abi/RewardEscrow.js"
+
+
 export const NetworkContextName = "NETWORK"
 export const BTC_POOL_NAME = "BTC Pool"
 export const STABLECOIN_POOL_NAME = "Stablecoin Pool"
 export const VENUS_POOL_NAME = "vTokens Pool"
 
 export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME | typeof VENUS_POOL_NAME
+
+export const THIS_REWARD_ESCROW_ABI = REWARD_ESCROW_ABI
 
 export enum ChainId {
   MAINNET = 56,
@@ -47,6 +52,20 @@ export class Token {
     this.icon = icon
   }
 }
+
+export class RewardEscrow {
+  readonly addresses: { [chainId in ChainId]: string }
+  readonly icon: string
+
+  constructor(
+    addresses: { [chainId in ChainId]: string },
+    icon: string,
+  ) {
+    this.addresses = addresses
+    this.icon = icon
+  }
+}
+
 
 export const BLOCK_TIME = 15000
 
@@ -83,6 +102,19 @@ export const VENUS_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
+export const DERIVE_DAO_REWARD_ADDRESSES: {
+  [chainId in ChainId]: string
+} = {
+  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+
+export const DERIVE_DAO_REWARD_ESCROW_ADDRESSES: {
+  [chainId in ChainId]: string
+} = {
+  [ChainId.MAINNET]: "0x7972ad6e5f080177ca7095d276f6fa8972ee7968",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
 
 
 export const BTC_SWAP_TOKEN_CONTRACT_ADDRESSES: {
@@ -211,7 +243,6 @@ export const VUSDT = new Token(
   vusdtLogo,
 )
 
-
 const OUSD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0x6bf2be9468314281cd28a94c35f967cafd388325",
   [ChainId.TESTNET]: "0xdeadbeef",
@@ -241,7 +272,7 @@ export const DRV = new Token(
 )
 
 const OIKOS_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x6be8a4C0C4FF684E2e1Fc1F645d6d4f2a81fE00c",
+  [ChainId.MAINNET]: "0x8559AeF12e2C40E66f0eb600d0Dd8ae5CeA419D7",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const OIKOS_REWARD = new Token(
@@ -269,7 +300,7 @@ export const OLD_DRV_REWARD = new Token(
 )
 
 const DRV_REWARD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: "0x5914b993a7E1180cD95104b37B7Bd04A3A7eA3fb", 
+  [ChainId.MAINNET]: "0x926Ef4A539E533096fE32C8c75707394eea269c5", 
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const DRV_REWARD = new Token(
@@ -281,6 +312,7 @@ export const DRV_REWARD = new Token(
   // TODO: ousd logo
   ousdLogo,
 )
+
 
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
 export const VENUS_POOL_TOKENS = [VBUSD, VUSDC, VUSDT]
