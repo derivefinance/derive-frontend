@@ -75,7 +75,7 @@ const DepositPage = (props: Props): ReactElement => {
   return (
     <div className="deposit">
       <TopMenu activeTab={"deposit"} />
-      {poolData?.oikosApr.gt(Zero) && myShareData?.lpTokenBalance.gt(0) && (
+      {poolData?.oikosApr.gt(Zero) && poolData?.name == "Stablecoin Pool" && myShareData?.lpTokenBalance.gt(0) && (
         <LPStakingBanner />
       )}
 
@@ -191,7 +191,7 @@ const DepositPage = (props: Props): ReactElement => {
                 setCurrentModal("review")
               }}
               disabled={!validDepositAmount}
-            >
+             >
               {t("deposit")}
             </Button>
           </Center>
