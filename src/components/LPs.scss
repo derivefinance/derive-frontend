@@ -1,0 +1,33 @@
+@import "../styles/theme";
+@import "../styles/viewports";
+
+
+div.poolInfoCard {
+    .infoBox {
+        background: var(--background-element);
+        padding: 20px;
+        padding-left: 20px;
+        border: 1px solid var(--outline);
+        border-radius: 10px;   
+    }
+    .infoBoxBtn {
+        background: var(--background-element);
+        padding-left: 65px;
+        padding-right: 65px;
+        padding-top:20px;
+        border: 1px solid var(--outline);
+        border-radius: 10px;   
+        text-align: center;
+    }    
+    .header {
+        font-size:20px;
+    }
+    .btn {
+        width:160px;
+    }
+    .btnRed {
+        width:160px;
+        background-color: red;
+    }
+
+}
