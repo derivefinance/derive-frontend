@@ -8,6 +8,7 @@ import React, {
 
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
 import { AbiItem, toWei } from 'web3-utils';
+import ToolTip from "../components/ToolTip"
 
 import {
     Table,
@@ -97,7 +98,7 @@ export const LPs = ({
                     <Box w="100%" h="auto" bg="var(--background-element)" className="infoBoxBtn"  >
                     <div className="twoColumnA" >
                         <div className="infoItem">
-                        
+
                             <Button 
                                 variant="primary"
                                 size="lg"
@@ -117,13 +118,19 @@ export const LPs = ({
                                 variant="primary"
                                 size="lg"
                                 className="btn"
-                                disabled={Number(props.lps.Rewards) == 0}
+                                disabled={Number(props.lps.Rewards) < 10000}
                                 onClick={(): void => {
                                     // @ts-ignore
                                     void props.lps.DrvRewards?.getReward( gasOptions )
                                 }}                        
                             >
-                            {"Claim"}
+                            
+                            {Number(props.lps.Rewards) < 10000 ? 
+                            <ToolTip content={"Minimum claim amount is 10,000 DRV"} >
+                                <span >{"Claim (?)"}</span>
+                            </ToolTip> : "Claim"
+                            }
+                            
                             </Button>
                         </div> 
                         <div className="infoItem">
