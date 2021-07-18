@@ -12,6 +12,7 @@ import {
   STABLECOIN_SWAP_ADDRESSES,
   STABLECOIN_SWAP_TOKEN,
   Token,
+  RewardEscrow,
   USDC,
   USDT,
   OIKOS_TOKENS,
@@ -25,6 +26,8 @@ import {
   VBUSD,
   VUSDC,
   VUSDT,
+  DERIVE_DAO_REWARD_ADDRESSES,
+  DERIVE_DAO_REWARD_ESCROW_ADDRESSES,
 } from "../constants"
 import { useMemo, useState } from "react"
 
@@ -41,7 +44,7 @@ import { SwapFlashLoan } from "../../types/ethers-contracts/SwapFlashLoan"
 import { SwapGuarded } from "../../types/ethers-contracts/SwapGuarded"
 import { getContract } from "../utils"
 import { useActiveWeb3React } from "./index"
-
+import { REWARD_ESCROW_ABI } from "../helpers/abi/RewardEscrow.js"
 
 const PANCAKE_ABI = [
   ...ERC20_ABI,
@@ -199,6 +202,19 @@ export function useTokenContract(
   abi = isPancakeContract ? PANCAKE_ABI : abi;
 
   const contract = useContract(tokenAddress, abi, withSignerIfPossible)
+  return contract
+}
+
+export function useRewardEscrowContract(
+  t: RewardEscrow,
+  withSignerIfPossible?: boolean,
+): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  const contractAddress = chainId ? t.addresses[chainId] : undefined
+  /* eslint-disable */
+  let abi = REWARD_ESCROW_ABI;
+
+  const contract = useContract(contractAddress, abi, withSignerIfPossible)
   return contract
 }
 
