@@ -7,8 +7,9 @@ import React, {
 } from 'react';
 
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core"
-import { AbiItem, toWei } from 'web3-utils';
+import { AbiItem, toWei } from 'web3-utils'
 import ToolTip from "../components/ToolTip"
+import { useToast } from "../hooks/useToast"
 
 import {
     Table,
@@ -25,10 +26,13 @@ const commify = (number) => {
     var nf = new Intl.NumberFormat()
     return nf.format(number)
 }
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
     
 export const LPs = ({
         ...props
     }) => {
+        const { addToast, clearToasts } = useToast()
         const { account } = useWeb3React()
         const gasOptions = { from:account, gasPrice:"5000000000", gasLimit:1e6 }
         return (
@@ -103,12 +107,27 @@ export const LPs = ({
                                 variant="primary"
                                 size="lg"
                                 className="btn"
-                                disabled={Number(props.lps.LPBalance) == 0 || Number(props.lps.Staked) > 0} 
-                                // @ts-ignore
-                                onClick={(): void => {
-                                    // @ts-ignore
-                                    void props.lps.DrvRewards?.stake( toWei(`${props.lps.LPBalance}`), gasOptions )
-                                }}                        
+                                disabled={Number(props.lps.LPBalance) == 0 || Number(props.lps.Staked) > 0}   
+                                onClick={async () => {
+                                    const tx = await props.lps.DrvRewards.stake(
+                                        toWei(`${props.lps.LPBalance}`),
+                                        gasOptions
+                                      )
+                                      const clearMessage = addToast({
+                                        type: "pending",
+                                        title: `Staking ...`,
+                                      })
+                                      console.log(tx)
+                                      const confirmedTransaction = await tx.wait()
+                                      clearMessage()
+                                      console.log(confirmedTransaction)
+                                      const msg = addToast({
+                                        type: "success",
+                                        title: `Operation completed! ✨`,
+                                      })
+                                      await delay(2000);
+                                      window.location.reload();
+                                } }
                             >
                             {"Stake"}
                             </Button>
@@ -119,10 +138,25 @@ export const LPs = ({
                                 size="lg"
                                 className="btn"
                                 disabled={Number(props.lps.Rewards) < 10000}
-                                onClick={(): void => {
-                                    // @ts-ignore
-                                    void props.lps.DrvRewards?.getReward( gasOptions )
-                                }}                        
+                                onClick={async () => {
+                                        const tx = await props.lps.DrvRewards.getReward(
+                                            gasOptions
+                                          )
+                                          const clearMessage = addToast({
+                                            type: "pending",
+                                            title: `Claiming rewards ...`,
+                                          })
+                                          console.log(tx)
+                                          const confirmedTransaction = await tx.wait()
+                                          clearMessage()
+                                          console.log(confirmedTransaction)
+                                          const msg = addToast({
+                                            type: "success",
+                                            title: `Operation completed! ✨`,
+                                          })
+                                          await delay(2000);
+                                          window.location.reload();
+                                }}                                                  
                             >
                             
                             {Number(props.lps.Rewards) < 10000 ? 
@@ -139,10 +173,26 @@ export const LPs = ({
                                 size="lg"
                                 className="btn"
                                 disabled={Number(props.lps.Staked) == 0}
-                                onClick={(): void => {
-                                    // @ts-ignore
-                                    void props.lps.DrvRewards?.withdraw( toWei(`${props.lps.Staked}`), gasOptions )
-                                }}                           
+                                onClick={async () => {
+                                    const tx = await props.lps.DrvRewards.withdraw(
+                                        toWei(`${props.lps.Staked}`),
+                                        gasOptions
+                                      )
+                                      const clearMessage = addToast({
+                                        type: "pending",
+                                        title: `Unstaking ...`,
+                                      })
+                                      console.log(tx)
+                                      const confirmedTransaction = await tx.wait()
+                                      clearMessage()
+                                      console.log(confirmedTransaction)
+                                      const msg = addToast({
+                                        type: "success",
+                                        title: `Operation completed! ✨`,
+                                      })
+                                      await delay(2000);
+                                      window.location.reload();
+                                } }                          
                             >
                             {"Unstake"}
                             </Button>
