@@ -160,7 +160,7 @@ export const LPs = ({
                             >
                             
                             {Number(props.lps.Rewards) < 10000 ? 
-                            <ToolTip content={"Minimum claim amount is 10,000 DRV"} >
+                            <ToolTip content={"Minimum claim amount is 10.000 DRV"} >
                                 <span >{"Claim (?)"}</span>
                             </ToolTip> : "Claim"
                             }
