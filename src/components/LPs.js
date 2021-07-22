@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react"
 
 const commify = (number) => {
-    var nf = new Intl.NumberFormat()
+    var nf = new Intl.NumberFormat('en-GB')
     return nf.format(number)
 }
 
@@ -52,7 +52,7 @@ export const LPs = ({
                                 <td colSpan="2">&nbsp;</td>
                             </Tr>
                             <Tr>
-                                <td colSpan="2">{commify(Number(props.lps.DrvBalance).toFixed(3))} {"DRV"}</td>
+                                <td colSpan="2">{commify(props.lps.DrvBalance)} {"DRV"}</td>
                             </Tr>
                         </Tbody>
                     </Table>
