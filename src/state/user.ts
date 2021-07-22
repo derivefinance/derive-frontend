@@ -42,7 +42,7 @@ interface UserState {
 export const initialState: UserState = {
   userSwapAdvancedMode: false,
   userPoolAdvancedMode: false,
-  userDarkMode: false,
+  userDarkMode: true,
   gasPriceSelected: GasPrices.Standard,
   slippageSelected: Slippages.OneTenth,
   infiniteApproval: false,
