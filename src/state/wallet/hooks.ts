@@ -1,4 +1,4 @@
-import { BLOCK_TIME, DAI, STABLECOIN_POOL_NAME, Token } from "../../constants"
+import { BLOCK_TIME, DAI, STABLECOIN_POOL_NAME, STABLECOIN_4_ASSETS_POOL_NAME, Token } from "../../constants"
 import {
   BTCB,
   BTC_POOL_NAME,
@@ -104,7 +104,9 @@ export function usePoolTokenBalances(
     return btcPoolTokenBalances
   } else if (poolName === STABLECOIN_POOL_NAME) {
     return stablecoinPoolTokenBalances
-  }else if (poolName === VENUS_POOL_NAME) {
+  } else if (poolName === STABLECOIN_4_ASSETS_POOL_NAME) {
+    return stablecoinPoolTokenBalances
+  }  else if (poolName === VENUS_POOL_NAME) {
     return venusPoolTokenBalances
   }
   return null

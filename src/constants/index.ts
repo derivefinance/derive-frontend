@@ -17,15 +17,18 @@ import { REWARD_ESCROW_ABI } from "../helpers/abi/RewardEscrow.js"
 export const NetworkContextName = "NETWORK"
 export const BTC_POOL_NAME = "BTC Pool"
 export const STABLECOIN_POOL_NAME = "Stablecoin Pool"
+export const STABLECOIN_4_ASSETS_POOL_NAME = "Stablecoin Pool (4 Assets)"
+
 export const VENUS_POOL_NAME = "vTokens Pool"
 
-export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME | typeof VENUS_POOL_NAME
+export type PoolName = typeof BTC_POOL_NAME | typeof STABLECOIN_POOL_NAME | typeof STABLECOIN_4_ASSETS_POOL_NAME | typeof VENUS_POOL_NAME
 
 export const THIS_REWARD_ESCROW_ABI = REWARD_ESCROW_ABI
 
 export enum ChainId {
   MAINNET = 56,
   TESTNET = 97,
+  GANACHE = 1337
 }
 
 export class Token {
@@ -70,7 +73,15 @@ export class RewardEscrow {
 export const BLOCK_TIME = 15000
 
 export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0xA726A51b8Fe5f027ce5039E6400864Fd0BDCB10F",
   [ChainId.MAINNET]: "0xA726A51b8Fe5f027ce5039E6400864Fd0BDCB10F",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+
+
+export const STABLECOIN_4_ASSETS_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0x5824B9cC529819c3c3D60D9787EC8EFeCf69EefB",
+  [ChainId.MAINNET]: "0xdeadbeef",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -91,7 +102,17 @@ export const MERKLETREE_DATA: { [chainId in ChainId]: string } = {
 export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
+  [ChainId.GANACHE]: "0x2f2B80e513aCe1F0F5a4D0aF6c5eDfAb75BC0De9",
   [ChainId.MAINNET]: "0x2f2B80e513aCe1F0F5a4D0aF6c5eDfAb75BC0De9",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+
+
+export const STABLECOIN_4_ASSETS_SWAP_TOKEN_CONTRACT_ADDRESSES: {
+  [chainId in ChainId]: string
+} = {
+  [ChainId.GANACHE]: "0x03e4315b72Fe75e5FE66AD758Fb89Dcf69f60bc9",
+  [ChainId.MAINNET]: "0xdeadbeef",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -142,6 +163,15 @@ export const STABLECOIN_SWAP_TOKEN = new Token(
   deriveLogo,
 )
 
+export const STABLECOIN_4_ASSETS_SWAP_TOKEN = new Token(
+  STABLECOIN_4_ASSETS_SWAP_TOKEN_CONTRACT_ADDRESSES,
+  18,
+  "deriveUSD2",
+  "deriveusd",
+  "derive DAI/USDC/USDT/OUSD",
+  deriveLogo,
+)
+
 export const VENUS_SWAP_TOKEN = new Token(
   VENUS_SWAP_TOKEN_CONTRACT_ADDRESSES,
   18,
@@ -166,6 +196,7 @@ export const PANCAKE_DRV_CONTRACT = new Token(
 
 // Stablecoins
 const DAI_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
   [ChainId.MAINNET]: "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
@@ -179,6 +210,7 @@ export const DAI = new Token(
 )
 
 const USDC_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
   [ChainId.MAINNET]: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
@@ -192,6 +224,7 @@ export const USDC = new Token(
 )
 
 const USDT_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0x55d398326f99059ff775485246999027b3197955",
   [ChainId.MAINNET]: "0x55d398326f99059ff775485246999027b3197955",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
@@ -244,6 +277,7 @@ export const VUSDT = new Token(
 )
 
 const OUSD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0x6bf2be9468314281cd28a94c35f967cafd388325",
   [ChainId.MAINNET]: "0x6bf2be9468314281cd28a94c35f967cafd388325",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
@@ -378,6 +412,10 @@ export const POOLS_MAP: {
     lpToken: STABLECOIN_SWAP_TOKEN,
     poolTokens: STABLECOIN_POOL_TOKENS,
   },
+  [STABLECOIN_4_ASSETS_POOL_NAME]: {
+    lpToken: STABLECOIN_4_ASSETS_SWAP_TOKEN,
+    poolTokens: STABLECOIN_POOL_TOKENS,
+  },
   [BTC_POOL_NAME]: {
     lpToken: BTC_SWAP_TOKEN,
     poolTokens: BTC_POOL_TOKENS,
@@ -397,11 +435,13 @@ export const TRANSACTION_TYPES = {
 export const POOL_FEE_PRECISION = 10
 
 export const DEPLOYED_BLOCK: { [chainId in ChainId]: number } = {
+  [ChainId.GANACHE]: 11656944,
   [ChainId.MAINNET]: 11656944,
   [ChainId.TESTNET]: 0,
 }
 
 export const POOL_STATS_URL: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "https://api.oikos.network/poolStats",
   [ChainId.MAINNET]: "https://ipfs.derive.exchange/pool-stats.json",
   [ChainId.TESTNET]:
     "https://mehmeta-team-bucket.storage.fleek.co/pool-stats-dev.json",

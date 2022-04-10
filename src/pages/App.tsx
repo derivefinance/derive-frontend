@@ -1,6 +1,6 @@
 import "../styles/global.scss"
 
-import { BLOCK_TIME, BTC_POOL_NAME, STABLECOIN_POOL_NAME, VENUS_POOL_NAME } from "../constants"
+import { BLOCK_TIME, BTC_POOL_NAME, STABLECOIN_POOL_NAME, STABLECOIN_4_ASSETS_POOL_NAME, VENUS_POOL_NAME } from "../constants"
 import React, {
   ReactElement,
   Suspense,
@@ -41,6 +41,12 @@ export default function App(): ReactElement {
   useEffect(() => {
     const shouldShowModal = !account && pathname !== "/about" && pathname !== "/tokenomics"
     setIsModalOpen(shouldShowModal)
+    const selectedTheme = localStorage.getItem('chakra-ui-color-mode') || '';
+    if (selectedTheme == 'light') {
+      //override selected theme
+      console.log(`override selected theme`)
+      localStorage.setItem('chakra-ui-color-mode', 'dark');
+    }
   }, [pathname, account])
 
   const fetchAndUpdateGasPrice = useCallback(() => {
@@ -101,6 +107,13 @@ export default function App(): ReactElement {
               path="/deposit/usd"
               render={(props) => (
                 <Deposit {...props} poolName={STABLECOIN_POOL_NAME} />
+              )}
+            />
+            <Route
+              exact
+              path="/deposit/usd4Assets"
+              render={(props) => (
+                <Deposit {...props} poolName={STABLECOIN_4_ASSETS_POOL_NAME} />
               )}
             />
             <Route

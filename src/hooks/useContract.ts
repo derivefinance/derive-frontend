@@ -9,8 +9,11 @@ import {
   PoolName,
   RENBTC,
   STABLECOIN_POOL_NAME,
+  STABLECOIN_4_ASSETS_POOL_NAME,
   STABLECOIN_SWAP_ADDRESSES,
+  STABLECOIN_4_ASSETS_SWAP_ADDRESSES,
   STABLECOIN_SWAP_TOKEN,
+  STABLECOIN_4_ASSETS_SWAP_TOKEN,
   Token,
   RewardEscrow,
   USDC,
@@ -234,6 +237,15 @@ export function useSwapUSDContract(): SwapFlashLoan | null {
   ) as SwapFlashLoan
 }
 
+export function useSwapUSD4AssetsContract(): SwapFlashLoan | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(
+    chainId ? STABLECOIN_4_ASSETS_SWAP_ADDRESSES[chainId] : undefined,
+    SWAP_FLASH_LOAN_ABI,
+  ) as SwapFlashLoan
+}
+
+
 export function useSwapVENUSContract(): SwapFlashLoan | null {
   const { chainId } = useActiveWeb3React()
   return useContract(
@@ -249,6 +261,7 @@ export function useSwapContract(
   poolName: PoolName,
 ): SwapGuarded | SwapFlashLoan | null {
   const usdSwapContract = useSwapUSDContract()
+  const usd4AssetsSwapContract = useSwapUSD4AssetsContract()
   const btcSwapContract = useSwapBTCContract()
   const venusSwapContract = useSwapVENUSContract()
 
@@ -256,6 +269,8 @@ export function useSwapContract(
     return btcSwapContract
   } else if (poolName === STABLECOIN_POOL_NAME) {
     return usdSwapContract
+  } else if (poolName === STABLECOIN_4_ASSETS_POOL_NAME) {
+    return usd4AssetsSwapContract
   }else if (poolName === VENUS_POOL_NAME) {
     return venusSwapContract
   }
@@ -312,6 +327,9 @@ export function useAllContracts(): AllContractsObject | null {
   const stablecoinSwapTokenContract = useTokenContract(
     STABLECOIN_SWAP_TOKEN,
   ) as LpTokenUnguarded
+  const stablecoin4AssetsSwapTokenContract = useTokenContract(
+    STABLECOIN_4_ASSETS_SWAP_TOKEN,
+  ) as LpTokenUnguarded
   const venusSwapTokenContract = useTokenContract(
     VENUS_SWAP_TOKEN,
   ) as LpTokenUnguarded
@@ -332,6 +350,7 @@ export function useAllContracts(): AllContractsObject | null {
         drvRewardContract,
         btcSwapTokenContract,
         stablecoinSwapTokenContract,
+        stablecoin4AssetsSwapTokenContract,
         venusSwapTokenContract,
         drvContract,
         pancakeDRVContract,
@@ -357,6 +376,7 @@ export function useAllContracts(): AllContractsObject | null {
       ["PancakeDRV"]: pancakeDRVContract,
       [BTC_SWAP_TOKEN.symbol]: btcSwapTokenContract,
       [STABLECOIN_SWAP_TOKEN.symbol]: stablecoinSwapTokenContract,
+      [STABLECOIN_4_ASSETS_SWAP_TOKEN.symbol]: stablecoin4AssetsSwapTokenContract,
       [VENUS_SWAP_TOKEN.symbol]: venusSwapTokenContract,
     }
   }, [
@@ -374,9 +394,11 @@ export function useAllContracts(): AllContractsObject | null {
     drvRewardContract,
     btcSwapTokenContract,
     stablecoinSwapTokenContract,
+    stablecoin4AssetsSwapTokenContract,
     venusSwapTokenContract,
     drvContract,
     pancakeDRVContract,
-    oldDrvRewardContract
+    oldDrvRewardContract,
+
   ])
 }
