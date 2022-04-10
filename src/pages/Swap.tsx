@@ -1,8 +1,11 @@
 import {
+  BUSD,
   BTC_POOL_NAME,
   BTC_POOL_TOKENS,
   STABLECOIN_POOL_NAME,
   STABLECOIN_POOL_TOKENS,
+  STABLECOIN_4_ASSETS_POOL_NAME,
+  STABLECOIN_4_ASSETS_POOL_TOKENS,
   TOKENS_MAP,
   VENUS_POOL_NAME,
   VENUS_POOL_TOKENS,
@@ -56,6 +59,7 @@ function Swap(): ReactElement {
   const approveAndSwap = useApproveAndSwap()
   const [btcPoolData] = usePoolData(BTC_POOL_NAME)
   const [usdPoolData] = usePoolData(STABLECOIN_POOL_NAME)
+  const [usd4AssetsPoolData] = usePoolData(STABLECOIN_4_ASSETS_POOL_NAME)
   const [venusPoolData] = usePoolData(VENUS_POOL_NAME)
   const btcTokenBalances = usePoolTokenBalances(BTC_POOL_NAME)
   const usdTokenBalances = usePoolTokenBalances(STABLECOIN_POOL_NAME)
@@ -63,6 +67,7 @@ function Swap(): ReactElement {
 
   const btcSwapContract = useSwapContract(BTC_POOL_NAME)
   const usdSwapContract = useSwapContract(STABLECOIN_POOL_NAME)
+  const usd4AssetsSwapContract = useSwapContract(STABLECOIN_4_ASSETS_POOL_NAME)
   const venusSwapContract = useSwapContract(VENUS_POOL_NAME)
 
   const { tokenPricesUSD, gasStandard, gasFast, gasInstant } = useSelector(
@@ -70,6 +75,7 @@ function Swap(): ReactElement {
   )
   const ALL_POOLS_TOKENS = BTC_POOL_TOKENS
     .concat(STABLECOIN_POOL_TOKENS)
+    .concat(BUSD)
     .concat(VENUS_POOL_TOKENS)
 
   function calculatePrice(
@@ -117,6 +123,9 @@ function Swap(): ReactElement {
     const USD_POOL_SET = new Set(
       STABLECOIN_POOL_TOKENS.map(({ symbol }) => symbol),
     )
+    const USD_POOL_4_ASSETS_SET = new Set(
+      STABLECOIN_4_ASSETS_POOL_TOKENS.map(({ symbol }) => symbol),
+    )
     const VENUS_POOL_SET = new Set(VENUS_POOL_TOKENS.map(({ symbol }) => symbol))
 
     const ALL_POOLS_SET = new Set(ALL_POOLS_TOKENS.map(({ symbol }) => symbol))
@@ -143,7 +152,15 @@ function Swap(): ReactElement {
         contract: usdSwapContract,
         virtualPrice: usdPoolData?.virtualPrice || One,
       }
-    }  else if (VENUS_POOL_SET.has(activeSymbol)) {
+    } else if (USD_POOL_4_ASSETS_SET.has(activeSymbol)) {
+      return {
+        name: STABLECOIN_4_ASSETS_POOL_NAME,
+        tokens: STABLECOIN_4_ASSETS_POOL_TOKENS,
+        tokensSet: USD_POOL_4_ASSETS_SET,
+        contract: usd4AssetsSwapContract,
+        virtualPrice: usd4AssetsPoolData?.virtualPrice || One,
+      }
+    }   else if (VENUS_POOL_SET.has(activeSymbol)) {
       return {
         name: VENUS_POOL_NAME,
         tokens: VENUS_POOL_TOKENS,
@@ -168,6 +185,7 @@ function Swap(): ReactElement {
     btcSwapContract,
     venusSwapContract,
     usdPoolData,
+    usd4AssetsPoolData,
     btcPoolData,
     venusPoolData,
   ])

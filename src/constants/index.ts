@@ -10,6 +10,7 @@ import usdtLogo from "../assets/icons/usdt.svg"
 import vbusdLogo from "../assets/icons/vBUSD.svg"
 import vusdcLogo from "../assets/icons/vBUSD.svg"
 import vusdtLogo from "../assets/icons/vBUSD.svg"
+import busdLogo from "../assets/icons/busd.svg"
 
 import { REWARD_ESCROW_ABI } from "../helpers/abi/RewardEscrow.js"
 
@@ -80,21 +81,24 @@ export const STABLECOIN_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
 
 
 export const STABLECOIN_4_ASSETS_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
-  [ChainId.GANACHE]: "0x5824B9cC529819c3c3D60D9787EC8EFeCf69EefB",
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.GANACHE]: "0xB7a7618265dB1aA24572BfA2a09615c1251275aE",
+  [ChainId.MAINNET]: "0x4a835B5d93c8F36486c0f4Ea60b0688ecA424eDa",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
 export const VENUS_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0xF6cAf057F6c91E7aB2e5F84714075CaCBB986f47",
   [ChainId.MAINNET]: "0xF6cAf057F6c91E7aB2e5F84714075CaCBB986f47",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 export const BTC_SWAP_ADDRESSES: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0xF01EF8d5601f0275edE73e1cA67141e680bfDdbd",
+  [ChainId.GANACHE]: "0xF01EF8d5601f0275edE73e1cA67141e680bfDdbd",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
 export const MERKLETREE_DATA: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "mainnetTestAccounts.json",
   [ChainId.MAINNET]: "mainnetTestAccounts.json",
   [ChainId.TESTNET]: "hardhat.json",
 }
@@ -111,8 +115,8 @@ export const STABLECOIN_SWAP_TOKEN_CONTRACT_ADDRESSES: {
 export const STABLECOIN_4_ASSETS_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
-  [ChainId.GANACHE]: "0x03e4315b72Fe75e5FE66AD758Fb89Dcf69f60bc9",
-  [ChainId.MAINNET]: "0xdeadbeef",
+  [ChainId.GANACHE]: "0x95518Bd0AF3aB3d2a2a6261a800337f09263d6Ad",
+  [ChainId.MAINNET]: "0x7feCBCf4Be378F877a268e7f33b3Bf4E4B7F6e22",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -142,6 +146,7 @@ export const BTC_SWAP_TOKEN_CONTRACT_ADDRESSES: {
   [chainId in ChainId]: string
 } = {
   [ChainId.MAINNET]: "0x950CCeD347Ad08Ff845b8d807a49050D33fB2d40",
+  [ChainId.GANACHE]: "0x950CCeD347Ad08Ff845b8d807a49050D33fB2d40",
   [ChainId.TESTNET]: "0xdeadbeef",
 }
 
@@ -168,7 +173,7 @@ export const STABLECOIN_4_ASSETS_SWAP_TOKEN = new Token(
   18,
   "deriveUSD2",
   "deriveusd",
-  "derive DAI/USDC/USDT/OUSD",
+  "derive DAI/USDC/USDT/OUSD (4 assets)",
   deriveLogo,
 )
 
@@ -221,6 +226,20 @@ export const USDC = new Token(
   "usd-coin",
   "USDC Coin",
   usdcLogo,
+)
+
+const BUSD_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
+  [ChainId.GANACHE]: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+  [ChainId.MAINNET]: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+  [ChainId.TESTNET]: "0xdeadbeef",
+}
+export const BUSD = new Token(
+  BUSD_CONTRACT_ADDRESSES,
+  18,
+  "BUSD",
+  "busd",
+  "BUSD token",
+  busdLogo,
 )
 
 const USDT_CONTRACT_ADDRESSES: { [chainId in ChainId]: string } = {
@@ -349,6 +368,8 @@ export const DRV_REWARD = new Token(
 
 
 export const STABLECOIN_POOL_TOKENS = [DAI, USDC, USDT, OUSD]
+export const STABLECOIN_4_ASSETS_POOL_TOKENS = [BUSD, USDC, USDT, OUSD]
+
 export const VENUS_POOL_TOKENS = [VBUSD, VUSDC, VUSDT]
 
 // Tokenized BTC
@@ -397,7 +418,7 @@ export const BTC_POOL_TOKENS = [BTCB, RENBTC, OBTC]
 // maps a symbol string to a token object
 export const TOKENS_MAP: {
   [symbol: string]: Token
-} = STABLECOIN_POOL_TOKENS.concat(BTC_POOL_TOKENS).concat(VENUS_POOL_TOKENS).reduce(
+} = STABLECOIN_POOL_TOKENS.concat(BTC_POOL_TOKENS).concat(VENUS_POOL_TOKENS).concat(STABLECOIN_4_ASSETS_POOL_TOKENS).reduce(
   (acc, token) => ({ ...acc, [token.symbol]: token }),
   {},
 )
@@ -414,7 +435,7 @@ export const POOLS_MAP: {
   },
   [STABLECOIN_4_ASSETS_POOL_NAME]: {
     lpToken: STABLECOIN_4_ASSETS_SWAP_TOKEN,
-    poolTokens: STABLECOIN_POOL_TOKENS,
+    poolTokens: STABLECOIN_4_ASSETS_POOL_TOKENS,
   },
   [BTC_POOL_NAME]: {
     lpToken: BTC_SWAP_TOKEN,

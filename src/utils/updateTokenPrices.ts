@@ -1,4 +1,4 @@
-import { BTC_POOL_TOKENS, STABLECOIN_POOL_TOKENS, VENUS_POOL_TOKENS } from "../constants"
+import {BUSD, BTC_POOL_TOKENS, STABLECOIN_POOL_TOKENS, VENUS_POOL_TOKENS } from "../constants"
 
 import { AppDispatch } from "../state"
 import retry from "async-retry"
@@ -15,6 +15,7 @@ interface CoinGeckoReponse {
 export default function fetchTokenPricesUSD(dispatch: AppDispatch): void {
   const tokens = BTC_POOL_TOKENS
   .concat(STABLECOIN_POOL_TOKENS)
+  .concat(BUSD)
   .concat(VENUS_POOL_TOKENS)
   
   const tokenIds = tokens

@@ -142,6 +142,8 @@ function Withdraw({ poolName }: Props): ReactElement {
     priceImpact: estWithdrawBonus,
     txnGasCost: txnGasCost,
   }
+  console.log(POOL.poolTokens)
+  
   POOL.poolTokens.forEach(({ name, decimals, icon, symbol }) => {
     if (BigNumber.from(withdrawFormState.tokenInputs[symbol].valueSafe).gt(0)) {
       reviewWithdrawData.withdraw.push({
