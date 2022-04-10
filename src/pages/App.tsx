@@ -156,6 +156,13 @@ export default function App(): ReactElement {
                 <Withdraw {...props} poolName={STABLECOIN_POOL_NAME} />
               )}
             />
+            <Route
+              exact
+              path="/withdraw/usd4Assets"
+              render={(props) => (
+                <Withdraw {...props} poolName={STABLECOIN_4_ASSETS_POOL_NAME} />
+              )}
+            />
             <Route exact path="/about" component={Risk} />
             <Route exact path="/tokenomics" component={Tokenomics} />
             <Route exact path="/dao" component={DAO} />

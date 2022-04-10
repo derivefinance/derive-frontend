@@ -6,6 +6,7 @@ import {
   PoolName,
   TRANSACTION_TYPES,
   VENUS_POOL_NAME,
+  STABLECOIN_4_ASSETS_POOL_NAME
 } from "../constants"
 import { formatBNToPercentString, getContract } from "../utils"
 import { useEffect, useState } from "react"
@@ -24,7 +25,8 @@ import { useAllContracts } from "./useContract"
 import { uniswapDRV } from '../constants/abis';
 import { ethers, getDefaultProvider } from 'ethers';
 
-const provider = getDefaultProvider('https://bsc-dataseed.binance.org');
+//todo weidai remove the hardcoded value
+const provider = getDefaultProvider('http://localhost:8545');
 
 interface TokenShareType {
   percent: string
@@ -119,7 +121,9 @@ export default function usePoolData(
         swapContract.swapStorage(), // will fail without account
       ])
       const { adminFee, lpToken: lpTokenAddress, swapFee } = swapStorage
+
       let lpTokenContract
+      
       if (poolName === BTC_POOL_NAME) {
         lpTokenContract = getContract(
           lpTokenAddress,
@@ -165,7 +169,8 @@ export default function usePoolData(
       )
       const tokenBalancesUSD = POOL.poolTokens.map((token, i) => {
         const balance = tokenBalances[i]
-      console.log(parseUnits(String(tokenPricesUSD[token.symbol] || 0), 18))
+
+        //console.log(parseUnits(String(tokenPricesUSD[token.symbol] || 0), 18))
 
          return balance
           .mul(parseUnits(String(tokenPricesUSD[token.symbol] || 0), 18))

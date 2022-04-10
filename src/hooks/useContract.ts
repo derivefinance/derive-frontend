@@ -4,6 +4,7 @@ import {
   BTC_SWAP_ADDRESSES,
   BTC_SWAP_TOKEN,
   DAI,
+  BUSD,
   OBTC,
   OUSD,
   PoolName,
@@ -177,6 +178,7 @@ function useContract(
   return useMemo(() => {
     if (!address || !ABI || !library) return null
     try {
+      console.log(`Getting ${address}`)
       return getContract(
         address,
         ABI,
@@ -316,6 +318,8 @@ export function useAllContracts(): AllContractsObject | null {
   const vbusdContract = useTokenContract(VBUSD) as Erc20
   const vusdcContract = useTokenContract(VUSDC) as Erc20
   const vusdtContract = useTokenContract(VUSDT) as Erc20  
+  const busdContract = useTokenContract(BUSD) as Erc20  
+
   const oikosRewardContract = useTokenContract(REWARD_CONTRACTS[0]) as Erc20
   const drvRewardContract = useTokenContract(REWARD_CONTRACTS[1]) as Erc20
   const drvContract = useTokenContract(DERIVE_TOKENS[0]) as Erc20
@@ -336,6 +340,7 @@ export function useAllContracts(): AllContractsObject | null {
   return useMemo(() => {
     if (
       ![
+        busdContract,
         btcbContract,
         renbtcContract,
         obtcContract,
@@ -359,6 +364,7 @@ export function useAllContracts(): AllContractsObject | null {
     )
       return null
     return {
+      [BUSD.symbol]: busdContract,
       [BTCB.symbol]: btcbContract,
       [RENBTC.symbol]: renbtcContract,
       [OBTC.symbol]: obtcContract,
@@ -380,6 +386,7 @@ export function useAllContracts(): AllContractsObject | null {
       [VENUS_SWAP_TOKEN.symbol]: venusSwapTokenContract,
     }
   }, [
+    busdContract,
     btcbContract,
     renbtcContract,
     obtcContract,

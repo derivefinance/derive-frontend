@@ -26,10 +26,16 @@ interface Props {
 
 function Deposit({ poolName }: Props): ReactElement | null {
   const POOL = POOLS_MAP[poolName]
+
+  console.log(POOL)
   const { account } = useActiveWeb3React()
   const approveAndDeposit = useApproveAndDeposit(poolName)
   const [poolData, userShareData] = usePoolData(poolName)
+  const is4AssetsPool = poolName == "Stablecoin Pool (4 Assets)"
+  console.log(`Using pool ${poolName} ${is4AssetsPool}`)
+
   const swapContract = useSwapContract(poolName)
+  console.log(swapContract)
   const [tokenFormState, updateTokenFormState] = useTokenFormState(
     POOL.poolTokens,
   )
@@ -101,13 +107,33 @@ function Deposit({ poolName }: Props): ReactElement | null {
     account,
     POOL.poolTokens,
   ])
+  
+  
 
+  const balancesA = POOL.poolTokens.map(({ symbol, name, icon, decimals }) => {
+    return parseFloat(formatBNToString(tokenBalances[symbol], decimals))
+  })
+
+  const balances = POOL.poolTokens.map(({ symbol, name, icon, decimals }) => ({
+      balance: parseFloat(formatBNToString(tokenBalances[symbol], decimals)),
+    }))
+
+  console.log(balancesA)
+  const min =  Math.min(...balancesA)
+
+  const sum = balances.reduce( (acc, { symbol, decimals, balance }) => {
+    const sum = parseFloat(acc) + balance;
+    console.log(`partial sum is ${sum}`)
+    return sum;
+  }, 0)
+
+  console.log(`GCD is ${min} of balance is ${sum}`)
   // A represention of tokens used for UI
   const tokens = POOL.poolTokens.map(({ symbol, name, icon, decimals }) => ({
     symbol,
     name,
     icon,
-    max: formatBNToString(tokenBalances?.[symbol] || Zero, decimals),
+    max: is4AssetsPool ? Number(min).toFixed(2) : formatBNToString(tokenBalances?.[symbol] || Zero, decimals),
     inputValue: tokenFormState[symbol].valueRaw,
   }))
 

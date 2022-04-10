@@ -1,6 +1,7 @@
 import { BLOCK_TIME, DAI, STABLECOIN_POOL_NAME, STABLECOIN_4_ASSETS_POOL_NAME, Token } from "../../constants"
 import {
   BTCB,
+  BUSD,
   BTC_POOL_NAME,
   OBTC,
   OUSD,
@@ -65,6 +66,7 @@ export function useTokenBalance(t: Token): BigNumber {
 export function usePoolTokenBalances(
   poolName: PoolName,
 ): { [token: string]: BigNumber } | null {
+  const busdTokenBalance = useTokenBalance(BUSD)
   const btcbTokenBalance = useTokenBalance(BTCB)
   const renbtcTokenBalance = useTokenBalance(RENBTC)
   const obtcTokenBalance = useTokenBalance(OBTC)
@@ -92,6 +94,16 @@ export function usePoolTokenBalances(
     }),
     [daiTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
   )
+
+  const stablecoinPool4AssetsTokenBalances = useMemo(
+    () => ({
+      [BUSD.symbol]: busdTokenBalance,
+      [USDC.symbol]: usdcTokenBalance,
+      [USDT.symbol]: usdtTokenBalance,
+      [OUSD.symbol]: ousdTokenBalance,
+    }),
+    [busdTokenBalance, usdcTokenBalance, usdtTokenBalance, ousdTokenBalance],
+  )
   const venusPoolTokenBalances = useMemo(
     () => ({
       [VBUSD.symbol]: vbusdTokenBalance,
@@ -105,7 +117,7 @@ export function usePoolTokenBalances(
   } else if (poolName === STABLECOIN_POOL_NAME) {
     return stablecoinPoolTokenBalances
   } else if (poolName === STABLECOIN_4_ASSETS_POOL_NAME) {
-    return stablecoinPoolTokenBalances
+    return stablecoinPool4AssetsTokenBalances
   }  else if (poolName === VENUS_POOL_NAME) {
     return venusPoolTokenBalances
   }
