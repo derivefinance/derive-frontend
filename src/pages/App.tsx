@@ -77,6 +77,11 @@ export default function App(): ReactElement {
 	}`;
 
   const { userDarkMode } = useSelector((state: AppState) => state.user)
+/* 
+  <a href="#" target="_blank" rel="noreferrer">
+    //DRV Token holder? Earn passive income by staking your tokens, read more by clicking here.
+  </a>
+*/
 
 	const bgColor = userDarkMode ? '#0E0D14' : 'white';
 	const border = `2px solid ${ userDarkMode ? '#0E0D14' : 'white'}`;
@@ -85,9 +90,9 @@ export default function App(): ReactElement {
       <Web3ReactManager>
         <ToastsProvider>
         <Announcement style={{ backgroundColor:`${bgColor}`, borderBottom: `${border}`}} >
-					<a href="https://bit.ly/3e4jKjt" target="_blank" rel="noreferrer">
-						DRV Token holder? Earn passive income by staking your tokens, read more by clicking here.
-					</a>
+
+          <p style={{color:"red"}}>{"Exchange is currently paused, please check back later"}</p>  
+
 				</Announcement>			
           <Modal
             isOpen={isModalOpen}
